@@ -33,7 +33,35 @@ const kGetStartedDescriptionText = TextStyle(
 );
 
 const kGetStartedButtonText = TextStyle(
-    fontSize: 24,
-    fontFamily: "Poppins",
-    color: Colors.white,
-    fontWeight: FontWeight.w600);
+  fontSize: 24,
+  fontFamily: "Poppins",
+  color: Colors.white,
+  fontWeight: FontWeight.w600,
+);
+
+const kDashboardLogoTextStyle = TextStyle(
+  fontSize: 16,
+  fontFamily: "Poppins",
+  color: kThemePrimaryColor,
+  fontWeight: FontWeight.w600,
+);
+
+const kDashboardHeadingTextStyle = TextStyle(
+  fontSize: 26,
+  fontFamily: "Poppins",
+  color: kThemePrimaryColor,
+  fontWeight: FontWeight.w600,
+);
+
+const kMetricsHeadingTextStyle = TextStyle(
+  fontSize: 12,
+  fontFamily: "Montserrat",
+  color: kThemePrimaryColor,
+);
+
+const kMetricsValueTextStyle = TextStyle(
+  fontSize: 36,
+  fontFamily: "Poppins",
+  color: kThemePrimaryColor,
+  fontWeight: FontWeight.w600,
+);
