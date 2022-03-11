@@ -19,7 +19,7 @@ class _GetStartedButtonState extends State<GetStartedButton> {
           context, MaterialPageRoute(builder: (context) => widget.nextScreen))),
       style: TextButton.styleFrom(
           elevation: 5.0,
-          padding: const EdgeInsets.fromLTRB(55, 15, 55, 15),
+          padding: const EdgeInsets.fromLTRB(55, 12, 55, 12),
           backgroundColor: kThemePrimaryColor,
           primary: Colors.transparent,
           shape: RoundedRectangleBorder(

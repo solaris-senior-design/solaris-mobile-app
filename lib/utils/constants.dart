@@ -14,7 +14,7 @@ const kSplashLogoTextStyle = TextStyle(
 );
 
 const kGetStartedLogoTextStyle = TextStyle(
-  fontSize: 30,
+  fontSize: 36,
   fontFamily: "Poppins",
   color: kThemePrimaryColor,
   fontWeight: FontWeight.w600,
@@ -33,7 +33,7 @@ const kGetStartedDescriptionText = TextStyle(
 );
 
 const kGetStartedButtonText = TextStyle(
-    fontSize: 16,
+    fontSize: 24,
     fontFamily: "Poppins",
     color: Colors.white,
     fontWeight: FontWeight.w600);

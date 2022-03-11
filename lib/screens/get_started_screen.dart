@@ -15,25 +15,64 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kThemeOffWhiteColor,
-      body: ListView(
-        children: [
-          Text(
-            'solaris',
-            style: kGetStartedLogoTextStyle,
-          ),
-          Text(
-            'the sun at the palm of your hands',
-            style: kGetStartedTaglineTextStyle,
-          ),
-          Image.asset('assets/images/undraw_visual_data_re_mxxo 1.png'),
-          Text(
-            'Track solar panel power generation data instantly',
-            style: kGetStartedDescriptionText,
-          ),
-          GetStartedButton(
-            nextScreen: DashboardScreen(),
-          )
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) => ListView(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width * 0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.03,
+                      vertical: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    child: Column(
+                      children: const [
+                        Text(
+                          'solaris',
+                          style: kGetStartedLogoTextStyle,
+                        ),
+                        Text(
+                          'the sun at the palm of your hands',
+                          style: kGetStartedTaglineTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.03,
+                      vertical: MediaQuery.of(context).size.height * 0.06,
+                    ),
+                    child: Image.asset(
+                        'assets/images/undraw_visual_data_re_mxxo 1.png'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.15,
+                      right: MediaQuery.of(context).size.width * 0.15,
+                    ),
+                    child: const Text(
+                      'Track solar panel power generation data instantly',
+                      style: kGetStartedDescriptionText,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.15),
+                    child: const GetStartedButton(
+                      nextScreen: DashboardScreen(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
