@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/screens/dashboard_screen.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 import 'package:solaris_mobile_app/widgets/get_started_button.dart';
 
@@ -63,10 +62,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.15),
-                    child: const GetStartedButton(
-                      nextScreen: DashboardScreen(),
-                    ),
+                        top: MediaQuery.of(context).size.height * 0.1),
+                    child: const GetStartedButton(),
                   ),
                 ],
               ),

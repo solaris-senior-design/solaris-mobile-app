@@ -32,13 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: kThemeOffWhiteColor,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              "solaris",
-              style: kSplashLogoTextStyle,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            const Center(
+              child: Text(
+                'solaris',
+                style: kSplashLogoTextStyle,
+              ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset('assets/images/splash_ellipse.png'),
+            )
           ],
         ),
       ),
