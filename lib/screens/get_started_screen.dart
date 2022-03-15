@@ -46,8 +46,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                       horizontal: MediaQuery.of(context).size.width * 0.03,
                       vertical: MediaQuery.of(context).size.height * 0.06,
                     ),
-                    child: Image.asset(
-                        'assets/images/undraw_visual_data_re_mxxo 1.png'),
+                    child: const Image(
+                        image: AssetImage(
+                            "assets/images/undraw_visual_data_re_mxxo 1.png")),
                   ),
                   Padding(
                     padding: EdgeInsets.only(

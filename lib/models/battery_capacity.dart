@@ -1,8 +1,7 @@
 import 'package:solaris_mobile_app/models/metric.dart';
 
 class BatteryCapacity extends Metric {
-  BatteryCapacity({parameter, required value, units})
-      : super(parameter, units, value: value);
+  BatteryCapacity({parameter, value, units}) : super(parameter, value, units);
 
   factory BatteryCapacity.fromJson(Map<String, dynamic> json) {
     return BatteryCapacity(

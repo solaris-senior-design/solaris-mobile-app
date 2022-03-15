@@ -34,8 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Stack(
           fit: StackFit.expand,
-          children: [
-            const Center(
+          children: const [
+            Center(
               child: Text(
                 'solaris',
                 style: kSplashLogoTextStyle,
@@ -43,7 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Image.asset('assets/images/splash_ellipse.png'),
+              child:
+                  Image(image: AssetImage("assets/images/splash_ellipse.png")),
             )
           ],
         ),

@@ -1,8 +1,7 @@
 import 'package:solaris_mobile_app/models/metric.dart';
 
 class Irradiance extends Metric {
-  Irradiance({parameter, required value, units})
-      : super(parameter, units, value: value);
+  Irradiance({parameter, value, units}) : super(parameter, value, units);
 
   factory Irradiance.fromJson(Map<String, dynamic> json) {
     return Irradiance(

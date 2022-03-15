@@ -15,17 +15,20 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  @override
-  Widget build(BuildContext context) {
+  List<MetricCard> getMetricCards() {
     List<Metric> dataMetrics = widget.metricsModel.getDataMetrics();
 
-    List<MetricCard> metricCards = List.generate(
+    return List.generate(
         dataMetrics.length,
         (i) => MetricCard(
-            parameter: dataMetrics[i].parameter,
-            value: dataMetrics[i].value,
-            units: dataMetrics[i].units));
+              parameter: dataMetrics[i].parameter,
+              value: dataMetrics[i].value,
+              units: dataMetrics[i].units,
+            ));
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kThemeOffWhiteColor,
       body: LayoutBuilder(
@@ -58,13 +61,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )
                     ],
                   ),
-                  Column(
-                    children: [
-                      Wrap(
-                        alignment: WrapAlignment.start,
-                        children: [for (MetricCard m in metricCards) m],
-                      ),
-                    ],
+                  Wrap(
+                    alignment: WrapAlignment.start,
+                    children: [for (MetricCard m in getMetricCards()) m],
                   ),
                 ],
               ),
