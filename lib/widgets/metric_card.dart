@@ -38,23 +38,26 @@ class _MetricCardState extends State<MetricCard> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            widget.parameter,
-            style: kMetricsHeadingTextStyle,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              widget.value.toString(),
-              style: kMetricsValueTextStyle,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.parameter,
+              style: kMetricsHeadingTextStyle,
             ),
-          ),
-          Text(
-            widget.units,
-            style: kMetricsHeadingTextStyle,
-          )
-        ]),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                widget.value.toString(),
+                style: kMetricsValueTextStyle,
+              ),
+            ),
+            Text(
+              widget.units,
+              style: kMetricsHeadingTextStyle,
+            ),
+          ],
+        ),
       ),
     );
   }

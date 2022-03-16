@@ -6,7 +6,7 @@ class BatteryCapacity extends Metric {
   factory BatteryCapacity.fromJson(Map<String, dynamic> json) {
     return BatteryCapacity(
         parameter: "Battery Capacity",
-        value: json['battery_capacity'],
+        value: json['battery_capacity'] ?? 0.0,
         units: "Percentage");
   }
 }
