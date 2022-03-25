@@ -5,6 +5,8 @@ class Voltage extends Metric {
 
   factory Voltage.fromJson(Map<String, dynamic> json) {
     return Voltage(
-        parameter: "Voltage", value: json['voltage'] ?? 0.0, units: "Volts");
+        parameter: "Voltage",
+        value: json['voltage'].toDouble(),
+        units: "Volts");
   }
 }

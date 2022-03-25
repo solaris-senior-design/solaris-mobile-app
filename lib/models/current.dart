@@ -5,6 +5,6 @@ class Current extends Metric {
 
   factory Current.fromJson(Map<String, dynamic> json) {
     return Current(
-        parameter: "Current", value: json['current'] ?? 0.0, units: "Amps");
+        parameter: "Current", value: json['current'].toDouble(), units: "Amps");
   }
 }

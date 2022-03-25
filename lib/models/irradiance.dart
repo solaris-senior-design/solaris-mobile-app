@@ -6,7 +6,7 @@ class Irradiance extends Metric {
   factory Irradiance.fromJson(Map<String, dynamic> json) {
     return Irradiance(
         parameter: "Irradiance",
-        value: json['irradiance'] ?? 0.0,
+        value: json['irradiance'].toDouble(),
         units: "Lumens");
   }
 }
