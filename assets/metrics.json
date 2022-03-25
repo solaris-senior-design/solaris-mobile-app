@@ -1,13 +1,36 @@
 {
     "data": {
-        "solar_id": 1,
-        "date_time": "2022-16-02 12:00:00",
-        "sensor_data": {
-            "voltage": 24.3,
-            "current": 2.57,
-            "temperature": 34.5,
-            "irradiance": 2.4,
-            "battery_capacity": 56.0
-        }
+        "solar_panels": [
+            {
+                "solar_id": 1,
+                "records": [
+                    {
+                        "date_time": "2022-16-02 12:00:00",
+                        "sensor_data": {
+                            "voltage": 24.3,
+                            "current": 2.57,
+                            "temperature": 34.5,
+                            "irradiance": 2.4,
+                            "battery_capacity": 56.0
+                        }
+                    }
+                ]
+            },
+            {
+                "solar_id": 2,
+                "records": [
+                    {
+                        "date_time": "2022-16-02 01:00:00",
+                        "sensor_data": {
+                            "voltage": 2.3,
+                            "current": 22.7,
+                            "temperature": 3.7,
+                            "irradiance": 8.7,
+                            "battery_capacity": 32.0
+                        }
+                    }
+                ]
+            }
+        ]
     }
 }
