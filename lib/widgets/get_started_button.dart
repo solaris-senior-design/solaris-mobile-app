@@ -27,7 +27,7 @@ class _GetStartedButtonState extends State<GetStartedButton> {
         ); // 'https://solaris-web-server.herokuapp.com'
         // Map<String, dynamic> data = json.decode(await getLocalJson());
         Map<String, dynamic> data = await networkHelper.getData();
-        MetricsModel metricsModel = MetricsModel.fromJson(data["data"][0]);
+        MetricsModel metricsModel = MetricsModel.fromJson(data["data"]);
 
         Navigator.push(
             context,
