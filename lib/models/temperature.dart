@@ -6,7 +6,9 @@ class Temperature extends Metric {
   factory Temperature.fromJson(Map<String, dynamic> json) {
     return Temperature(
         parameter: "Temperature",
-        value: json['temperature'] ?? 0.0,
+        value: (json.containsKey("temperature"))
+            ? json['temperature'].toDouble()
+            : 0.0,
         units: "Celsius");
   }
 }

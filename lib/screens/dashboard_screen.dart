@@ -1,29 +1,47 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/models/metrics_model.dart';
 import 'package:solaris_mobile_app/widgets/metric_card.dart';
 import '../models/metric.dart';
+import '../models/network_helper.dart';
 import '../utils/constants.dart';
+import '../utils/get_local_json.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final MetricsModel metricsModel;
-
-  const DashboardScreen({Key? key, required this.metricsModel})
-      : super(key: key);
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  List<MetricCard> getMetricCards() {
-    List<Metric> dataMetrics = widget.metricsModel.getDataMetrics();
+  late final Future<MetricsModel> metricsModel;
 
+  @override
+  void initState() {
+    super.initState();
+    metricsModel = fetchData();
+  }
+
+  Future<MetricsModel> fetchData() async {
+    NetworkHelper networkHelper = NetworkHelper(
+      Uri(
+          scheme: 'https',
+          host: 'solaris-web-server.herokuapp.com',
+          path: 'record'),
+    ); // 'https://solaris-web-server.herokuapp.com'
+    // Map<String, dynamic> data = json.decode(await getLocalJson());
+    Map<String, dynamic> data = await networkHelper.getData();
+    return MetricsModel.fromJson(data["data"]);
+  }
+
+  List<MetricCard> getMetricCards(List<Metric> metrics) {
     return List.generate(
-        dataMetrics.length,
+        metrics.length,
         (i) => MetricCard(
-              parameter: dataMetrics[i].parameter,
-              value: dataMetrics[i].value,
-              units: dataMetrics[i].units,
+              parameter: metrics[i].parameter,
+              value: metrics[i].value,
+              units: metrics[i].units,
             ));
   }
 
@@ -61,10 +79,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )
                     ],
                   ),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    children: [for (MetricCard m in getMetricCards()) m],
-                  ),
+                  FutureBuilder(
+                      future: metricsModel,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          MetricsModel mModel = snapshot.data as MetricsModel;
+                          return Wrap(
+                            alignment: WrapAlignment.start,
+                            children: [
+                              for (MetricCard m
+                                  in getMetricCards(mModel.getDataMetrics()))
+                                m
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: kThemePrimaryColor,
+                          ),
+                        );
+                      })
                 ],
               ),
             )
