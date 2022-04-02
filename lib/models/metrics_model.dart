@@ -30,6 +30,6 @@ class MetricsModel {
   }
 
   List<Metric> getDataMetrics() {
-    return [voltage, current, temperature, irradiance, batteryCapacity];
+    return [voltage, current, temperature, batteryCapacity];
   }
 }

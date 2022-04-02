@@ -15,7 +15,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  late final Future<MetricsModel> metricsModel;
+  late Future<MetricsModel> metricsModel;
+  late DateTime time;
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<MetricsModel> fetchData() async {
+    time = DateTime.now();
     NetworkHelper networkHelper = NetworkHelper(
       Uri(
           scheme: 'https',
@@ -68,40 +70,61 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Metrics',
                         style: kDashboardHeadingTextStyle,
                       ),
-                      Icon(
-                        Icons.account_circle_outlined,
-                        size: 30.0,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                metricsModel = fetchData();
+                                time = DateTime.now();
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.refresh,
+                              size: 30.0,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.account_circle_outlined,
+                            size: 30.0,
+                          ),
+                        ],
                       )
                     ],
                   ),
                   FutureBuilder(
                       future: metricsModel,
                       builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+                        if (snapshot.connectionState != ConnectionState.done) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: kThemePrimaryColor,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else if (snapshot.hasData) {
                           MetricsModel mModel = snapshot.data as MetricsModel;
                           return Wrap(
                             alignment: WrapAlignment.start,
                             children: [
+                              Text('Last Refreshed: $time'),
                               for (MetricCard m
                                   in getMetricCards(mModel.getDataMetrics()))
                                 m
                             ],
                           );
-                        } else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
+                        } else {
+                          return const Text(
+                              'No data could be fetched! Check the Solaris web server for more info.');
                         }
-
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: kThemePrimaryColor,
-                          ),
-                        );
-                      })
+                      }),
                 ],
               ),
             )
