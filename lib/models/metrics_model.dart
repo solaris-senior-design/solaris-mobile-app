@@ -1,5 +1,4 @@
 import 'battery_capacity.dart';
-import 'metric.dart';
 import 'temperature.dart';
 import 'current.dart';
 import 'irradiance.dart';
@@ -27,9 +26,5 @@ class MetricsModel {
       irradiance: Irradiance.fromJson(json["sensor_data"]),
       batteryCapacity: BatteryCapacity.fromJson(json["sensor_data"]),
     );
-  }
-
-  List<Metric> getDataMetrics() {
-    return [voltage, current, temperature, batteryCapacity];
   }
 }

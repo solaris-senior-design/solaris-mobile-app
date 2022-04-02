@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/models/metrics_model.dart';
 import 'package:solaris_mobile_app/widgets/metric_card.dart';
 import '../models/metric.dart';
 import '../models/network_helper.dart';
+import '../models/record.dart';
 import '../utils/constants.dart';
 import '../utils/get_local_json.dart';
 
@@ -15,16 +15,16 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  late Future<MetricsModel> metricsModel;
+  late Future<Record> record;
   late DateTime time;
 
   @override
   void initState() {
     super.initState();
-    metricsModel = fetchData();
+    record = fetchData();
   }
 
-  Future<MetricsModel> fetchData() async {
+  Future<Record> fetchData() async {
     time = DateTime.now();
     NetworkHelper networkHelper = NetworkHelper(
       Uri(
@@ -34,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ); // 'https://solaris-web-server.herokuapp.com'
     // Map<String, dynamic> data = json.decode(await getLocalJson());
     Map<String, dynamic> data = await networkHelper.getData();
-    return MetricsModel.fromJson(data["data"]);
+    return Record.fromJson(data["data"]["record"]);
   }
 
   List<MetricCard> getMetricCards(List<Metric> metrics) {
@@ -45,6 +45,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
               value: metrics[i].value,
               units: metrics[i].units,
             ));
+  }
+
+  Widget createDashboardView(context, snapshot) {
+    Record record = snapshot.data as Record;
+    return Column(
+      children: [
+        Wrap(
+          alignment: WrapAlignment.start,
+          children: [
+            for (MetricCard m in getMetricCards(record.getDataMetrics())) m,
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
+                'Record Timestamp:',
+                style: kDashboardTimeHeadingText,
+              ),
+              Text(
+                '${record.timestamp}',
+                style: kDashboardTimeBodyText,
+              ),
+              const Text(
+                'Last Refreshed:',
+                style: kDashboardTimeHeadingText,
+              ),
+              Text(
+                '$time',
+                style: kDashboardTimeBodyText,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -81,7 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                metricsModel = fetchData();
+                                record = fetchData();
                                 time = DateTime.now();
                               });
                             },
@@ -99,32 +137,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                   FutureBuilder(
-                      future: metricsModel,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: kThemePrimaryColor,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (snapshot.hasData) {
-                          MetricsModel mModel = snapshot.data as MetricsModel;
-                          return Wrap(
-                            alignment: WrapAlignment.start,
-                            children: [
-                              Text('Last Refreshed: $time'),
-                              for (MetricCard m
-                                  in getMetricCards(mModel.getDataMetrics()))
-                                m
-                            ],
-                          );
-                        } else {
-                          return const Text(
-                              'No data could be fetched! Check the Solaris web server for more info.');
-                        }
-                      }),
+                    future: record,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: kThemePrimaryColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        return createDashboardView(context, snapshot);
+                      } else {
+                        return const Text(
+                            'No data could be fetched! Check the Solaris web server for more info.');
+                      }
+                    },
+                  ),
                 ],
               ),
             )
