@@ -1,13 +1,15 @@
 {
     "data": {
         "solar_id": 1,
-        "date_time": "2022-16-02 12:00:00",
-        "sensor_data": {
-            "voltage": 24.3,
-            "current": 2.57,
-            "temperature": 34.5,
-            "irradiance": 2.4,
-            "battery_capacity": 56.0
+        "record": {
+            "date_time": "2022-02-16 12:00:00",
+            "sensor_data": {
+                "voltage": 24.3,
+                "current": 2.57,
+                "temperature": 34.5,
+                "irradiance": 2.4,
+                "battery_capacity": 56.0
+            }
         }
     }
 }
