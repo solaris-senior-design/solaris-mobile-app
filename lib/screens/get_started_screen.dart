@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 import 'package:solaris_mobile_app/widgets/get_started_button.dart';
 
@@ -46,9 +47,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                       horizontal: MediaQuery.of(context).size.width * 0.03,
                       vertical: MediaQuery.of(context).size.height * 0.06,
                     ),
-                    child: const Image(
-                        image: AssetImage(
-                            "assets/images/undraw_visual_data_re_mxxo 1.png")),
+                    child: SvgPicture.asset(
+                        "assets/images/undraw_visual_data_re_mxxo 1.svg"),
                   ),
                   Padding(
                     padding: EdgeInsets.only(

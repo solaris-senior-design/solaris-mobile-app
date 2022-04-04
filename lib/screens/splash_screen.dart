@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solaris_mobile_app/screens/get_started_screen.dart';
 import '../utils/constants.dart';
 
@@ -34,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Stack(
           fit: StackFit.expand,
-          children: const [
-            Center(
+          children: [
+            const Center(
               child: Text(
                 'solaris',
                 style: kSplashLogoTextStyle,
@@ -43,8 +44,10 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child:
-                  Image(image: AssetImage("assets/images/splash_ellipse.png")),
+              child: SvgPicture.asset(
+                "assets/images/splash_ellipse.svg",
+                alignment: Alignment.bottomCenter,
+              ),
             )
           ],
         ),
