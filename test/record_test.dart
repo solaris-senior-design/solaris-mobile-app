@@ -8,8 +8,8 @@ void main() {
   test("creates a valid record model", () async {
     final file = File('test/test_resources/metrics_test.json');
     final jsonFile = json.decode(await file.readAsString());
-    Record recordTest = Record.fromJson(jsonFile["data"]["record"]);
+    Record recordTest = Record.fromJson(jsonFile);
     expect(recordTest.getDataMetrics(), isA<List<Metric>>());
-    expect(recordTest.timestamp, isA<DateTime>());
+    expect(recordTest.createdAt, isA<DateTime>());
   });
 }

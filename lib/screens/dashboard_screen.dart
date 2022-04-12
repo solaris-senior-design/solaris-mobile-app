@@ -30,11 +30,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Uri(
           scheme: 'https',
           host: 'solaris-web-server.herokuapp.com',
-          path: 'record'),
+          path: 'findRecentRecord'),
     ); // 'https://solaris-web-server.herokuapp.com'
     // Map<String, dynamic> data = json.decode(await getLocalJson());
     Map<String, dynamic> data = await networkHelper.getData();
-    return Record.fromJson(data["data"]["record"]);
+    return Record.fromJson(data);
   }
 
   List<MetricCard> getMetricCards(List<Metric> metrics) {
@@ -67,7 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 style: kDashboardTimeHeadingText,
               ),
               Text(
-                '${record.timestamp}',
+                '${record.createdAt}',
                 style: kDashboardTimeBodyText,
               ),
               const Text(
