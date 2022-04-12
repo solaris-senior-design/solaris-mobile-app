@@ -10,8 +10,7 @@ void main() {
   test("creates a valid metrics model", () async {
     final file = File('test/test_resources/metrics_test.json');
     final jsonFile = json.decode(await file.readAsString());
-    MetricsModel metricsTest =
-        MetricsModel.fromJson(jsonFile["data"]["record"]);
+    MetricsModel metricsTest = MetricsModel.fromJson(jsonFile);
     expect(metricsTest.voltage, isA<Voltage>());
   });
 }

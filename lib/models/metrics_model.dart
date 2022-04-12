@@ -20,11 +20,11 @@ class MetricsModel {
 
   factory MetricsModel.fromJson(Map<String, dynamic> json) {
     return MetricsModel(
-      voltage: Voltage.fromJson(json["sensor_data"]),
-      current: Current.fromJson(json["sensor_data"]),
-      temperature: Temperature.fromJson(json["sensor_data"]),
-      irradiance: Irradiance.fromJson(json["sensor_data"]),
-      batteryCapacity: BatteryCapacity.fromJson(json["sensor_data"]),
+      voltage: Voltage.fromJson(json),
+      current: Current.fromJson(json),
+      temperature: Temperature.fromJson(json),
+      irradiance: Irradiance.fromJson(json),
+      batteryCapacity: BatteryCapacity.fromJson(json),
     );
   }
 }

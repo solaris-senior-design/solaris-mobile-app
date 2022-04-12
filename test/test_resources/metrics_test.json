@@ -1,15 +1,11 @@
 {
-    "data": {
-        "solar_id": 1,
-        "record": {
-            "date_time": "2022-02-16 12:00:00",
-            "sensor_data": {
-                "voltage": 24.3,
-                "current": 2.57,
-                "temperature": 34.5,
-                "irradiance": 2.4,
-                "battery_capacity": 56.0
-            }
-        }
-    }
+  "recordId": 2,
+  "voltage": 5.9,
+  "current": 1.5,
+  "irradiance": 0,
+  "temperature": 43.4,
+  "batteryCapacity": 51.7,
+  "createdAt": "2022-04-01T15:37:04.472Z",
+  "updatedAt": "2022-04-01T15:37:04.472Z",
+  "solarPanelId": 1
 }
