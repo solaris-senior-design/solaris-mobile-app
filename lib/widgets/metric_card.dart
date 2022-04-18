@@ -48,7 +48,7 @@ class _MetricCardState extends State<MetricCard> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                widget.value.toString(),
+                widget.value.toStringAsFixed(2),
                 style: kMetricsValueTextStyle,
               ),
             ),
