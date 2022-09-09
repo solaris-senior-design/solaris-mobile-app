@@ -28,7 +28,7 @@ class _MetricCardState extends State<MetricCard> {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 8.0,
           )
         ],

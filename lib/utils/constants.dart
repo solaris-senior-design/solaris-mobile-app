@@ -79,3 +79,10 @@ const kDashboardTimeHeadingText = TextStyle(
   color: kThemePrimaryColor,
   fontWeight: FontWeight.w500,
 );
+
+const kMetricLineChartHeadingText = TextStyle(
+  fontSize: 14,
+  fontFamily: "Poppins",
+  color: kThemePrimaryColor,
+  fontWeight: FontWeight.w500,
+);

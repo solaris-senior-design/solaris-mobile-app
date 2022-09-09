@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/widgets/metric_card.dart';
+import 'package:solaris_mobile_app/widgets/metric_line_chart.dart';
 import '../models/metric.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
 import '../utils/constants.dart';
 import '../utils/get_local_json.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -62,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              MetricLineChartCard(),
               const Text(
                 'Record Timestamp:',
                 style: kDashboardTimeHeadingText,
