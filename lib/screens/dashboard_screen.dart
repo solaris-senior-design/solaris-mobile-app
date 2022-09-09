@@ -126,6 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 time = DateTime.now();
                               });
                             },
+                            splashRadius: 20,
                             icon: const Icon(
                               Icons.refresh,
                               size: 30.0,

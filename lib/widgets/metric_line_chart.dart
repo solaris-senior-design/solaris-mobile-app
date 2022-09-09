@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:solaris_mobile_app/utils/mock_line_chart_data.dart';
 
 import '../utils/constants.dart';
 
@@ -13,10 +14,36 @@ class MetricLineChartCard extends StatefulWidget {
 }
 
 class _MetricLineChartCard extends State<MetricLineChartCard> {
+  SideTitles get _bottomTitles => SideTitles(
+        showTitles: true,
+        getTitlesWidget: (value, meta) {
+          String text = '';
+          switch (value.toInt()) {
+            case 0:
+              text = '12:00';
+              break;
+            case 1:
+              text = '12:15';
+              break;
+            case 2:
+              text = '12:30';
+              break;
+            case 3:
+              text = '12:45';
+              break;
+            case 4:
+              text = '1:00';
+              break;
+          }
+
+          return Text(text);
+        },
+        interval: 1.0,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 330,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
@@ -63,38 +90,24 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                 child: LineChart(
                   LineChartData(
                     lineTouchData: LineTouchData(enabled: true),
-                    gridData: FlGridData(show: true),
-                    titlesData: FlTitlesData(show: true),
+                    gridData: FlGridData(
+                        drawHorizontalLine: true, drawVerticalLine: true),
+                    titlesData: FlTitlesData(
+                      bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                      rightTitles:
+                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      topTitles:
+                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    ),
                     borderData: FlBorderData(show: true),
                     lineBarsData: [
                       LineChartBarData(
-                        spots: [
-                          const FlSpot(0, 0),
-                          const FlSpot(1, 5),
-                          const FlSpot(2, 2),
-                          const FlSpot(5, 7),
-                          const FlSpot(6, 0),
-                          const FlSpot(7, 0),
-                          const FlSpot(8, 0),
-                          const FlSpot(9, 3),
-                          const FlSpot(10, 8),
-                          const FlSpot(13, 0),
-                          const FlSpot(14, 9),
-                          const FlSpot(15, 0),
-                          const FlSpot(18, 12),
-                          const FlSpot(19, 4),
-                          const FlSpot(20, 0),
-                          const FlSpot(21, 5),
-                          const FlSpot(22, 0),
-                          const FlSpot(23, 0),
-                        ],
+                        spots: mockLineChartData,
+                        color: kThemeSecondaryColor,
                         isCurved: true,
                         barWidth: 3,
                         isStrokeCapRound: true,
-                        dotData: FlDotData(show: false),
-                        belowBarData: BarAreaData(
-                          show: true,
-                        ),
+                        dotData: FlDotData(show: true),
                       ),
                     ],
                   ),
