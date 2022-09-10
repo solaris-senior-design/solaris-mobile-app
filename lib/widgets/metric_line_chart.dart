@@ -14,33 +14,6 @@ class MetricLineChartCard extends StatefulWidget {
 }
 
 class _MetricLineChartCard extends State<MetricLineChartCard> {
-  SideTitles get _bottomTitles => SideTitles(
-        showTitles: true,
-        getTitlesWidget: (value, meta) {
-          String text = '';
-          switch (value.toInt()) {
-            case 0:
-              text = '12:00';
-              break;
-            case 1:
-              text = '12:15';
-              break;
-            case 2:
-              text = '12:30';
-              break;
-            case 3:
-              text = '12:45';
-              break;
-            case 4:
-              text = '1:00';
-              break;
-          }
-
-          return Text(text);
-        },
-        interval: 1.0,
-      );
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,31 +58,65 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                   )
                 ],
               ),
-              AspectRatio(
-                aspectRatio: 1.5,
-                child: LineChart(
-                  LineChartData(
-                    lineTouchData: LineTouchData(enabled: true),
-                    gridData: FlGridData(
-                        drawHorizontalLine: true, drawVerticalLine: true),
-                    titlesData: FlTitlesData(
-                      bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                      rightTitles:
-                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles:
-                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    ),
-                    borderData: FlBorderData(show: true),
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: mockLineChartData,
-                        color: kThemeSecondaryColor,
-                        isCurved: true,
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: FlDotData(show: true),
+              Padding(
+                padding:
+                    const EdgeInsets.only(right: 10.0, top: 5.0, bottom: 5.0),
+                child: AspectRatio(
+                  aspectRatio: 1.5,
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: LineTouchData(enabled: true),
+                      maxY: 15,
+                      gridData: FlGridData(
+                        drawHorizontalLine: true,
+                        drawVerticalLine: true,
+                        getDrawingHorizontalLine: (value) => FlLine(
+                          color: kThemeBorderLineColor,
+                          strokeWidth: 1,
+                        ),
+                        getDrawingVerticalLine: (value) => FlLine(
+                          color: kThemeBorderLineColor,
+                          strokeWidth: 1,
+                        ),
                       ),
-                    ],
+                      titlesData: FlTitlesData(
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                              showTitles: true,
+                              interval: 1,
+                              getTitlesWidget: (value, meta) {
+                                return Text(
+                                  voltageTimeStamps[value.toInt()],
+                                  style: kMetricLineChartBorderText,
+                                );
+                              }),
+                        ),
+                        leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) {
+                                  return Text(
+                                    value.toString(),
+                                    style: kMetricLineChartBorderText,
+                                  );
+                                })),
+                        rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                      ),
+                      borderData: FlBorderData(
+                          border: Border.all(color: kThemeBorderLineColor)),
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: mockLineChartData,
+                          color: kThemeRedLineColor,
+                          isCurved: true,
+                          barWidth: 3,
+                          dotData: FlDotData(show: true),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
