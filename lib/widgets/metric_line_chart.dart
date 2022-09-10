@@ -40,7 +40,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Voltage',
+                    'Metrics',
                     style: kMetricLineChartHeadingText,
                   ),
                   Row(
@@ -85,9 +85,12 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                               showTitles: true,
                               interval: 1,
                               getTitlesWidget: (value, meta) {
-                                return Text(
-                                  voltageTimeStamps[value.toInt()],
-                                  style: kMetricLineChartBorderText,
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 6.0),
+                                  child: Text(
+                                    voltageTimeStamps[value.toInt()],
+                                    style: kMetricLineChartBorderText,
+                                  ),
                                 );
                               }),
                         ),

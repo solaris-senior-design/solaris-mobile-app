@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:solaris_mobile_app/widgets/metric_card.dart';
 import 'package:solaris_mobile_app/widgets/metric_line_chart.dart';
 import '../models/metric.dart';
@@ -19,6 +20,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late Future<Record> record;
   late DateTime time;
+  final currentDayFormatter = DateFormat('h:mm a');
+  final recordDateFormatter = DateFormat.yMd().add_jm();
 
   @override
   void initState() {
@@ -52,37 +55,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget createDashboardView(context, snapshot) {
     Record record = snapshot.data as Record;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          'Record Timestamp: ${recordDateFormatter.format(record.createdAt)}',
+          style: kDashboardTimeBodyText,
+        ),
         Wrap(
           alignment: WrapAlignment.start,
           children: [
             for (MetricCard m in getMetricCards(record.getDataMetrics())) m,
           ],
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              MetricLineChartCard(),
-              const Text(
-                'Record Timestamp:',
-                style: kDashboardTimeHeadingText,
-              ),
-              Text(
-                '${record.createdAt}',
-                style: kDashboardTimeBodyText,
-              ),
-              const Text(
-                'Last Refreshed:',
-                style: kDashboardTimeHeadingText,
-              ),
-              Text(
-                '$time',
-                style: kDashboardTimeBodyText,
-              )
-            ],
-          ),
         ),
       ],
     );
@@ -112,9 +95,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Metrics',
-                        style: kDashboardHeadingTextStyle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          const Text(
+                            'Metrics',
+                            style: kDashboardHeadingTextStyle,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              '(refreshed at ${currentDayFormatter.format(time)})',
+                              style: kMetricsHeadingTextStyle,
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -129,12 +126,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             splashRadius: 20,
                             icon: const Icon(
                               Icons.refresh,
-                              size: 30.0,
+                              size: 25.0,
                             ),
-                          ),
-                          const Icon(
-                            Icons.account_circle_outlined,
-                            size: 30.0,
                           ),
                         ],
                       )
@@ -159,6 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       }
                     },
                   ),
+                  MetricLineChartCard(),
                 ],
               ),
             )
