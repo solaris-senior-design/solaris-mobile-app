@@ -1,12 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/utils/mock_line_chart_data.dart';
 
+import '../models/metric_line_chart.dart';
 import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
   final String parameter;
-  const MetricLineChartCard({Key? key, required this.parameter})
+  final MetricLineChart lineChartController;
+
+  const MetricLineChartCard(
+      {Key? key, required this.parameter, required this.lineChartController})
       : super(key: key);
 
   @override
@@ -88,7 +91,8 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 6.0),
                                   child: Text(
-                                    voltageTimeStamps[value.toInt()],
+                                    widget.lineChartController
+                                        .getMetricTimeStamps()[value.toInt()],
                                     style: kMetricLineChartBorderText,
                                   ),
                                 );
@@ -112,7 +116,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                           border: Border.all(color: kThemeBorderLineColor)),
                       lineBarsData: [
                         LineChartBarData(
-                          spots: mockLineChartData,
+                          spots: widget.lineChartController.getMetricFlSpots(),
                           color: kThemeRedLineColor,
                           isCurved: true,
                           barWidth: 3,

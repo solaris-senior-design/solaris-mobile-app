@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:solaris_mobile_app/widgets/metric_card.dart';
 import 'package:solaris_mobile_app/widgets/metric_line_chart.dart';
 import '../models/metric.dart';
+import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
 import '../utils/constants.dart';
 import '../utils/get_local_json.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -18,6 +18,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  late Future<MetricLineChart> futureLineChart;
   late Future<Record> record;
   late DateTime time;
   final currentDayFormatter = DateFormat('h:mm a');
@@ -27,6 +28,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     record = fetchMetricCardData();
+    futureLineChart = fetchLineChartData();
+  }
+
+  Future<MetricLineChart> fetchLineChartData() async {
+    Map<String, dynamic> lineChartData =
+        json.decode(await getLocalLineChartJson());
+    return MetricLineChart.fromJson(lineChartData);
   }
 
   Future<Record> fetchMetricCardData() async {
@@ -37,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           host: 'solaris-web-server.herokuapp.com',
           path: 'findRecentRecord'),
     ); // 'https://solaris-web-server.herokuapp.com'
-    // Map<String, dynamic> data = json.decode(await getLocalJson());
+    // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
     Map<String, dynamic> data = await networkHelper.getData();
     return Record.fromJson(data);
   }
@@ -67,6 +75,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             for (MetricCard m in getMetricCards(record.getDataMetrics())) m,
           ],
         ),
+      ],
+    );
+  }
+
+  Widget createMetricLineChartView(context, snapshot) {
+    MetricLineChart lineChart = snapshot.data as MetricLineChart;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MetricLineChartCard(
+            parameter: 'Voltage', lineChartController: lineChart),
       ],
     );
   }
@@ -155,8 +174,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
-                  const MetricLineChartCard(
-                    parameter: 'Voltage',
+                  FutureBuilder(
+                    future: futureLineChart,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: kThemePrimaryColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        return createMetricLineChartView(context, snapshot);
+                      } else {
+                        return const Text(
+                            'No data could be fetched! Check the Solaris web server for more info.');
+                      }
+                    },
                   ),
                 ],
               ),
