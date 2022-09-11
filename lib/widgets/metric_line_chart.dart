@@ -5,9 +5,9 @@ import 'package:solaris_mobile_app/utils/mock_line_chart_data.dart';
 import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
-  const MetricLineChartCard({
-    Key? key,
-  }) : super(key: key);
+  final String parameter;
+  const MetricLineChartCard({Key? key, required this.parameter})
+      : super(key: key);
 
   @override
   State<MetricLineChartCard> createState() => _MetricLineChartCard();
@@ -39,8 +39,8 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Metrics',
+                  Text(
+                    widget.parameter,
                     style: kMetricLineChartHeadingText,
                   ),
                   Row(

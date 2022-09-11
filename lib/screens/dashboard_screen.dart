@@ -26,10 +26,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    record = fetchData();
+    record = fetchMetricCardData();
   }
 
-  Future<Record> fetchData() async {
+  Future<Record> fetchMetricCardData() async {
     time = DateTime.now();
     NetworkHelper networkHelper = NetworkHelper(
       Uri(
@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ));
   }
 
-  Widget createDashboardView(context, snapshot) {
+  Widget createMetricCardView(context, snapshot) {
     Record record = snapshot.data as Record;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                record = fetchData();
+                                record = fetchMetricCardData();
                                 time = DateTime.now();
                               });
                             },
@@ -145,14 +145,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.hasData) {
-                        return createDashboardView(context, snapshot);
+                        return createMetricCardView(context, snapshot);
                       } else {
                         return const Text(
                             'No data could be fetched! Check the Solaris web server for more info.');
                       }
                     },
                   ),
-                  MetricLineChartCard(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  const MetricLineChartCard(
+                    parameter: 'Voltage',
+                  ),
                 ],
               ),
             )

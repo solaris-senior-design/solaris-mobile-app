@@ -1,0 +1,40 @@
+{
+  "voltageDataPoints": [
+    {
+      "recordId": 2,
+      "voltage": 0.0,
+      "createdAt": "2022-04-01T15:37:04.472Z",
+      "solarPanelId": 1
+    },
+    {
+      "recordId": 3,
+      "voltage": 5.5,
+      "createdAt": "2022-04-01T15:38:04.472Z",
+      "solarPanelId": 1
+    },
+    {
+      "recordId": 4,
+      "voltage": 5.9,
+      "createdAt": "2022-04-01T15:39:04.472Z",
+      "solarPanelId": 1
+    },
+    {
+      "recordId": 5,
+      "voltage": 2.3,
+      "createdAt": "2022-04-01T15:40:04.472Z",
+      "solarPanelId": 1
+    },
+    {
+      "recordId": 6,
+      "voltage": 9.9,
+      "createdAt": "2022-04-01T15:41:04.472Z",
+      "solarPanelId": 1
+    },
+    {
+      "recordId": 7,
+      "voltage": 9.1,
+      "createdAt": "2022-04-01T15:42:04.472Z",
+      "solarPanelId": 1
+    }
+  ]
+}

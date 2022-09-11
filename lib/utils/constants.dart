@@ -98,5 +98,5 @@ const kMetricLineChartHeadingText = TextStyle(
   fontSize: 14,
   fontFamily: "Poppins",
   color: kThemePrimaryColor,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w400,
 );
