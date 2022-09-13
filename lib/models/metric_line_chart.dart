@@ -6,7 +6,7 @@ class MetricLineChart {
   MetricLineChart(this._dataPoints);
 
   factory MetricLineChart.fromJson(Map<String, dynamic> json) {
-    List<Map<String, dynamic>> points = (json["voltageDataPoints"] as List)
+    List<Map<String, dynamic>> points = (json["records"] as List)
         .map((e) => Map<String, dynamic>.from(e))
         .toList();
     return MetricLineChart(points);
@@ -16,9 +16,9 @@ class MetricLineChart {
     return _dataPoints;
   }
 
-  List<FlSpot> getMetricFlSpots() {
+  List<FlSpot> getMetricFlSpots(String metric) {
     return List.generate(dataPoints.length,
-        (i) => FlSpot(i.toDouble(), dataPoints[i]["voltage"])).toList();
+        (i) => FlSpot(i.toDouble(), dataPoints[i][metric])).toList();
   }
 
   List<String> getMetricTimeStamps() {

@@ -1,38 +1,56 @@
 {
-  "voltageDataPoints": [
+  "records": [
     {
       "recordId": 2,
       "voltage": 0.0,
+      "current": 0.0,
+      "temperature": 43.4,
+      "batteryCapacity": 30.7,
       "createdAt": "2022-04-01T15:37:04.472Z",
       "solarPanelId": 1
     },
     {
       "recordId": 3,
       "voltage": 5.5,
+      "current": 0.1,
+      "temperature": 60.4,
+      "batteryCapacity": 60.2,
       "createdAt": "2022-04-01T15:38:04.472Z",
       "solarPanelId": 1
     },
     {
       "recordId": 4,
       "voltage": 5.9,
+      "current": 0.15,
+      "temperature": 74.3,
+      "batteryCapacity": 70.3,
       "createdAt": "2022-04-01T15:39:04.472Z",
       "solarPanelId": 1
     },
     {
       "recordId": 5,
       "voltage": 2.3,
+      "current": 0.17,
+      "temperature": 55.4,
+      "batteryCapacity": 60.6,
       "createdAt": "2022-04-01T15:40:04.472Z",
       "solarPanelId": 1
     },
     {
       "recordId": 6,
       "voltage": 9.9,
+      "current": 0.19,
+      "temperature": 10.4,
+      "batteryCapacity": 90.7,
       "createdAt": "2022-04-01T15:41:04.472Z",
       "solarPanelId": 1
     },
     {
       "recordId": 7,
       "voltage": 9.1,
+      "current": 0.2,
+      "temperature": 69.8,
+      "batteryCapacity": 51.7,
       "createdAt": "2022-04-01T15:42:04.472Z",
       "solarPanelId": 1
     }

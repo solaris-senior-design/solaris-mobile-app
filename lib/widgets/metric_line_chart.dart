@@ -6,10 +6,14 @@ import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
   final String parameter;
+  final Color graphColor;
   final MetricLineChart lineChartController;
 
   const MetricLineChartCard(
-      {Key? key, required this.parameter, required this.lineChartController})
+      {Key? key,
+      required this.parameter,
+      required this.graphColor,
+      required this.lineChartController})
       : super(key: key);
 
   @override
@@ -43,7 +47,8 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.parameter,
+                    widget.parameter[0].toUpperCase() +
+                        widget.parameter.substring(1),
                     style: kMetricLineChartHeadingText,
                   ),
                   Row(
@@ -69,7 +74,6 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                   child: LineChart(
                     LineChartData(
                       lineTouchData: LineTouchData(enabled: true),
-                      maxY: 15,
                       gridData: FlGridData(
                         drawHorizontalLine: true,
                         drawVerticalLine: true,
@@ -116,8 +120,9 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                           border: Border.all(color: kThemeBorderLineColor)),
                       lineBarsData: [
                         LineChartBarData(
-                          spots: widget.lineChartController.getMetricFlSpots(),
-                          color: kThemeRedLineColor,
+                          spots: widget.lineChartController
+                              .getMetricFlSpots(widget.parameter),
+                          color: widget.graphColor,
                           isCurved: true,
                           barWidth: 3,
                           dotData: FlDotData(show: true),

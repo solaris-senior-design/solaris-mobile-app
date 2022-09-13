@@ -85,7 +85,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MetricLineChartCard(
-            parameter: 'Voltage', lineChartController: lineChart),
+            parameter: 'voltage',
+            graphColor: kThemeRedLineColor,
+            lineChartController: lineChart),
+        MetricLineChartCard(
+            parameter: 'current',
+            graphColor: kThemeYellowLineColor,
+            lineChartController: lineChart),
+        MetricLineChartCard(
+            parameter: 'batteryCapacity',
+            graphColor: kThemeGreenLineColor,
+            lineChartController: lineChart),
+        MetricLineChartCard(
+            parameter: 'temperature',
+            graphColor: kThemePinkLineColor,
+            lineChartController: lineChart)
       ],
     );
   }
