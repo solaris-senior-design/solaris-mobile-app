@@ -24,6 +24,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 350,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         boxShadow: [

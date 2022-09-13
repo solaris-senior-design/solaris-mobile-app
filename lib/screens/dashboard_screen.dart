@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:solaris_mobile_app/widgets/metric_card.dart';
-import 'package:solaris_mobile_app/widgets/metric_line_chart.dart';
-import '../models/metric.dart';
+import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
 import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
 import '../utils/constants.dart';
+import '../utils/date_formatter.dart';
 import '../utils/get_local_json.dart';
+import '../widgets/metric_line_chart_builder.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -21,8 +20,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   late Future<MetricLineChart> futureLineChart;
   late Future<Record> record;
   late DateTime time;
-  final currentDayFormatter = DateFormat('h:mm a');
-  final recordDateFormatter = DateFormat.yMd().add_jm();
 
   @override
   void initState() {
@@ -48,60 +45,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
     Map<String, dynamic> data = await networkHelper.getData();
     return Record.fromJson(data);
-  }
-
-  List<MetricCard> getMetricCards(List<Metric> metrics) {
-    return List.generate(
-        metrics.length,
-        (i) => MetricCard(
-              parameter: metrics[i].parameter,
-              value: metrics[i].value,
-              units: metrics[i].units,
-            ));
-  }
-
-  Widget createMetricCardView(context, snapshot) {
-    Record record = snapshot.data as Record;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Record Timestamp: ${recordDateFormatter.format(record.createdAt)}',
-          style: kDashboardTimeBodyText,
-        ),
-        Wrap(
-          alignment: WrapAlignment.start,
-          children: [
-            for (MetricCard m in getMetricCards(record.getDataMetrics())) m,
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget createMetricLineChartView(context, snapshot) {
-    MetricLineChart lineChart = snapshot.data as MetricLineChart;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MetricLineChartCard(
-            parameter: 'voltage',
-            graphColor: kThemeRedLineColor,
-            lineChartController: lineChart),
-        MetricLineChartCard(
-            parameter: 'current',
-            graphColor: kThemeYellowLineColor,
-            lineChartController: lineChart),
-        MetricLineChartCard(
-            parameter: 'batteryCapacity',
-            graphColor: kThemeGreenLineColor,
-            lineChartController: lineChart),
-        MetricLineChartCard(
-            parameter: 'temperature',
-            graphColor: kThemePinkLineColor,
-            lineChartController: lineChart)
-      ],
-    );
   }
 
   @override
@@ -166,46 +109,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )
                     ],
                   ),
-                  FutureBuilder(
-                    future: record,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: kThemePrimaryColor,
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        return createMetricCardView(context, snapshot);
-                      } else {
-                        return const Text(
-                            'No data could be fetched! Check the Solaris web server for more info.');
-                      }
-                    },
+                  MetricCardBuilder(
+                    futureRecord: record,
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
-                  FutureBuilder(
-                    future: futureLineChart,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: kThemePrimaryColor,
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        return createMetricLineChartView(context, snapshot);
-                      } else {
-                        return const Text(
-                            'No data could be fetched! Check the Solaris web server for more info.');
-                      }
-                    },
+                  MetricLineChartBuilder(
+                    futureLineChart: futureLineChart,
                   ),
                 ],
               ),
