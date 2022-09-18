@@ -5,15 +5,19 @@ import '../models/metric_line_chart.dart';
 import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
+  final String title;
   final String parameter;
   final Color graphColor;
-  final MetricLineChart lineChartController;
+  final List<String> labels;
+  final List<FlSpot> metricPoints;
 
   const MetricLineChartCard(
       {Key? key,
+      required this.title,
       required this.parameter,
       required this.graphColor,
-      required this.lineChartController})
+      required this.labels,
+      required this.metricPoints})
       : super(key: key);
 
   @override
@@ -48,8 +52,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.parameter[0].toUpperCase() +
-                        widget.parameter.substring(1),
+                    widget.title,
                     style: kMetricLineChartHeadingText,
                   ),
                   Row(
@@ -96,8 +99,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 6.0),
                                   child: Text(
-                                    widget.lineChartController
-                                        .getMetricTimeStamps()[value.toInt()],
+                                    widget.labels[value.toInt()],
                                     style: kMetricLineChartBorderText,
                                   ),
                                 );
@@ -121,8 +123,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                           border: Border.all(color: kThemeBorderLineColor)),
                       lineBarsData: [
                         LineChartBarData(
-                          spots: widget.lineChartController
-                              .getMetricFlSpots(widget.parameter),
+                          spots: widget.metricPoints,
                           color: widget.graphColor,
                           isCurved: true,
                           barWidth: 3,

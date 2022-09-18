@@ -25,21 +25,29 @@ class _MetricLineChartBuilderState extends State<MetricLineChartBuilder> {
           alignment: WrapAlignment.start,
           children: [
             MetricLineChartCard(
+                title: 'Voltage',
                 parameter: 'voltage',
                 graphColor: kThemeRedLineColor,
-                lineChartController: lineChart),
+                labels: lineChart.getMetricTimeStamps(),
+                metricPoints: lineChart.getVoltageSpots()),
             MetricLineChartCard(
+                title: 'Current',
                 parameter: 'current',
                 graphColor: kThemeYellowLineColor,
-                lineChartController: lineChart),
+                labels: lineChart.getMetricTimeStamps(),
+                metricPoints: lineChart.getCurrentSpots()),
             MetricLineChartCard(
+                title: 'Battery Capacity',
                 parameter: 'batteryCapacity',
                 graphColor: kThemeGreenLineColor,
-                lineChartController: lineChart),
+                labels: lineChart.getMetricTimeStamps(),
+                metricPoints: lineChart.getBatteryCapacitySpots()),
             MetricLineChartCard(
+                title: 'Temperature',
                 parameter: 'temperature',
                 graphColor: kThemePinkLineColor,
-                lineChartController: lineChart)
+                labels: lineChart.getMetricTimeStamps(),
+                metricPoints: lineChart.getTemperatureSpots()),
           ],
         ),
       ],
