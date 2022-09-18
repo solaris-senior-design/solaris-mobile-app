@@ -1,5 +1,4 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:intl/intl.dart';
 import 'package:solaris_mobile_app/models/record.dart';
 import 'package:solaris_mobile_app/utils/date_formatter.dart';
 
@@ -22,7 +21,7 @@ class MetricLineChart {
   List<FlSpot> getVoltageSpots() {
     List<FlSpot> spots = [];
     for (int i = 0; i < _dataPoints.length; i++) {
-      spots.add(FlSpot(i.toDouble(), _dataPoints[i].voltage.value));
+      spots.add(FlSpot(i.toDouble(), _dataPoints[i].voltage));
     }
     return spots;
   }
@@ -30,7 +29,7 @@ class MetricLineChart {
   List<FlSpot> getCurrentSpots() {
     List<FlSpot> spots = [];
     for (int i = 0; i < _dataPoints.length; i++) {
-      spots.add(FlSpot(i.toDouble(), _dataPoints[i].current.value));
+      spots.add(FlSpot(i.toDouble(), _dataPoints[i].current));
     }
     return spots;
   }
@@ -38,7 +37,7 @@ class MetricLineChart {
   List<FlSpot> getBatteryCapacitySpots() {
     List<FlSpot> spots = [];
     for (int i = 0; i < _dataPoints.length; i++) {
-      spots.add(FlSpot(i.toDouble(), _dataPoints[i].batteryCapacity.value));
+      spots.add(FlSpot(i.toDouble(), _dataPoints[i].batteryCapacity));
     }
     return spots;
   }
@@ -46,7 +45,7 @@ class MetricLineChart {
   List<FlSpot> getTemperatureSpots() {
     List<FlSpot> spots = [];
     for (int i = 0; i < _dataPoints.length; i++) {
-      spots.add(FlSpot(i.toDouble(), _dataPoints[i].temperature.value));
+      spots.add(FlSpot(i.toDouble(), _dataPoints[i].temperature));
     }
     return spots;
   }

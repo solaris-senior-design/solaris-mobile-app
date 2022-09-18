@@ -1,22 +1,20 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-import '../models/metric_line_chart.dart';
 import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
   final String title;
   final String parameter;
-  final Color graphColor;
-  final List<String> labels;
+  final Color color;
+  final List<String> xLabels;
   final List<FlSpot> metricPoints;
 
   const MetricLineChartCard(
       {Key? key,
       required this.title,
       required this.parameter,
-      required this.graphColor,
-      required this.labels,
+      required this.color,
+      required this.xLabels,
       required this.metricPoints})
       : super(key: key);
 
@@ -99,7 +97,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 6.0),
                                   child: Text(
-                                    widget.labels[value.toInt()],
+                                    widget.xLabels[value.toInt()],
                                     style: kMetricLineChartBorderText,
                                   ),
                                 );
@@ -124,7 +122,7 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                       lineBarsData: [
                         LineChartBarData(
                           spots: widget.metricPoints,
-                          color: widget.graphColor,
+                          color: widget.color,
                           isCurved: true,
                           barWidth: 3,
                           dotData: FlDotData(show: true),

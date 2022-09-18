@@ -28,31 +28,31 @@ class Record {
         time, voltage, current, temperature, irradiance, batteryCapacity);
   }
 
+  List<Metric> getDataMetrics() {
+    return [_voltage, _current, _temperature, _batteryCapacity];
+  }
+
   DateTime get createdAt {
     return _createdAt;
   }
 
-  Voltage get voltage {
-    return _voltage;
+  double get voltage {
+    return _voltage.value;
   }
 
-  Current get current {
-    return _current;
+  double get current {
+    return _current.value;
   }
 
-  Temperature get temperature {
-    return _temperature;
+  double get temperature {
+    return _temperature.value;
   }
 
-  Irradiance get irradiance {
-    return _irradiance;
+  double get irradiance {
+    return _irradiance.value;
   }
 
-  BatteryCapacity get batteryCapacity {
-    return _batteryCapacity;
-  }
-
-  List<Metric> getDataMetrics() {
-    return [_voltage, _current, _temperature, _batteryCapacity];
+  double get batteryCapacity {
+    return _batteryCapacity.value;
   }
 }
