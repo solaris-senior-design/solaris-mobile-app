@@ -35,8 +35,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<MetricLineChart> fetchLineChartData() async {
-    Map<String, dynamic> lineChartData =
-        json.decode(await getLocalLineChartJson());
+    // Map<String, dynamic> lineChartData =
+    // json.decode(await getLocalLineChartJson());
+    NetworkHelper networkHelper = NetworkHelper(
+      Uri(
+          scheme: 'https',
+          host: 'solaris-web-server.herokuapp.com',
+          path: 'records/list_of_recent_records/1'),
+    ); // 'https://solaris-web-server.herokuapp.com'
+    Map<String, dynamic> lineChartData = await networkHelper.getData();
     return MetricLineChart.fromJson(lineChartData);
   }
 
@@ -46,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Uri(
           scheme: 'https',
           host: 'solaris-web-server.herokuapp.com',
-          path: 'findRecentRecord'),
+          path: 'records/most_recent/1'),
     ); // 'https://solaris-web-server.herokuapp.com'
     // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
     Map<String, dynamic> data = await networkHelper.getData();

@@ -31,8 +31,8 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8.0,
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4.0,
           )
         ],
       ),
@@ -106,9 +106,10 @@ class _MetricLineChartCard extends State<MetricLineChartCard> {
                         leftTitles: AxisTitles(
                             sideTitles: SideTitles(
                                 showTitles: true,
+                                reservedSize: 35,
                                 getTitlesWidget: (value, meta) {
                                   return Text(
-                                    value.toString(),
+                                    value.toStringAsFixed(2),
                                     style: kMetricLineChartBorderText,
                                   );
                                 })),
