@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
@@ -26,6 +27,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     record = fetchMetricCardData();
     futureLineChart = fetchLineChartData();
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      setState(() {
+        futureLineChart = fetchLineChartData();
+      });
+    });
   }
 
   Future<MetricLineChart> fetchLineChartData() async {
