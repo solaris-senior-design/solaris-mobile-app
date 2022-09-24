@@ -4,7 +4,6 @@ import '../utils/constants.dart';
 
 class MetricLineChartCard extends StatefulWidget {
   final String title;
-  final String parameter;
   final Color color;
   final List<String> xLabels;
   final List<FlSpot> metricPoints;
@@ -12,7 +11,6 @@ class MetricLineChartCard extends StatefulWidget {
   const MetricLineChartCard(
       {Key? key,
       required this.title,
-      required this.parameter,
       required this.color,
       required this.xLabels,
       required this.metricPoints})
