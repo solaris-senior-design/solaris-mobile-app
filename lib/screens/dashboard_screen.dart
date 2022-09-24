@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:solaris_mobile_app/globals/globals.dart';
 import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
 import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
@@ -37,26 +38,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<MetricLineChart> fetchLineChartData() async {
     // Map<String, dynamic> lineChartData =
     // json.decode(await getLocalLineChartJson());
-    NetworkHelper networkHelper = NetworkHelper(
+    Map<String, dynamic> lineChartData = await NetworkHelper.getData(
+      httpClient,
       Uri(
           scheme: 'https',
           host: 'solaris-web-server.herokuapp.com',
           path: 'records/list_of_recent_records/1'),
     ); // 'https://solaris-web-server.herokuapp.com'
-    Map<String, dynamic> lineChartData = await networkHelper.getData();
     return MetricLineChart.fromJson(lineChartData);
   }
 
   Future<Record> fetchMetricCardData() async {
     time = DateTime.now();
-    NetworkHelper networkHelper = NetworkHelper(
+    Map<String, dynamic> data = await NetworkHelper.getData(
+      httpClient,
       Uri(
           scheme: 'https',
           host: 'solaris-web-server.herokuapp.com',
           path: 'records/most_recent/1'),
     ); // 'https://solaris-web-server.herokuapp.com'
     // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
-    Map<String, dynamic> data = await networkHelper.getData();
     return Record.fromJson(data);
   }
 
