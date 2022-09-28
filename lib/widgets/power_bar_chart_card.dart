@@ -117,7 +117,7 @@ class _PowerBarChartCard extends State<PowerBarChartCard> {
                                   day = 'Thu';
                                   break;
                                 case 5:
-                                  day = 'Fr';
+                                  day = 'Fri';
                                   break;
                                 case 6:
                                   day = 'Sat';
