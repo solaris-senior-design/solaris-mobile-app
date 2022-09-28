@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         const AssetImage("assets/images/undraw_visual_data_re_mxxo 1.png"),
         context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),

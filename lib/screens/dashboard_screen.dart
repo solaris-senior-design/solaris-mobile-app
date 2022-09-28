@@ -1,11 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/widgets/metric_card.dart';
-import '../models/metric.dart';
+import 'package:solaris_mobile_app/globals/globals.dart';
+import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
+import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
 import '../utils/constants.dart';
+import '../utils/date_formatter.dart';
 import '../utils/get_local_json.dart';
+import '../widgets/metric_line_chart_builder.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -15,74 +19,46 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  late Future<MetricLineChart> futureLineChart;
   late Future<Record> record;
   late DateTime time;
 
   @override
   void initState() {
     super.initState();
-    record = fetchData();
+    record = fetchMetricCardData();
+    futureLineChart = fetchLineChartData();
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      setState(() {
+        futureLineChart = fetchLineChartData();
+      });
+    });
   }
 
-  Future<Record> fetchData() async {
-    time = DateTime.now();
-    NetworkHelper networkHelper = NetworkHelper(
+  Future<MetricLineChart> fetchLineChartData() async {
+    // Map<String, dynamic> lineChartData =
+    // json.decode(await getLocalLineChartJson());
+    Map<String, dynamic> lineChartData = await NetworkHelper.getData(
+      httpClient,
       Uri(
           scheme: 'https',
           host: 'solaris-web-server.herokuapp.com',
-          path: 'findRecentRecord'),
+          path: 'records/list_of_recent_records/1'),
     ); // 'https://solaris-web-server.herokuapp.com'
-    // Map<String, dynamic> data = json.decode(await getLocalJson());
-    Map<String, dynamic> data = await networkHelper.getData();
+    return MetricLineChart.fromJson(lineChartData);
+  }
+
+  Future<Record> fetchMetricCardData() async {
+    time = DateTime.now();
+    Map<String, dynamic> data = await NetworkHelper.getData(
+      httpClient,
+      Uri(
+          scheme: 'https',
+          host: 'solaris-web-server.herokuapp.com',
+          path: 'records/most_recent/1'),
+    ); // 'https://solaris-web-server.herokuapp.com'
+    // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
     return Record.fromJson(data);
-  }
-
-  List<MetricCard> getMetricCards(List<Metric> metrics) {
-    return List.generate(
-        metrics.length,
-        (i) => MetricCard(
-              parameter: metrics[i].parameter,
-              value: metrics[i].value,
-              units: metrics[i].units,
-            ));
-  }
-
-  Widget createDashboardView(context, snapshot) {
-    Record record = snapshot.data as Record;
-    return Column(
-      children: [
-        Wrap(
-          alignment: WrapAlignment.start,
-          children: [
-            for (MetricCard m in getMetricCards(record.getDataMetrics())) m,
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                'Record Timestamp:',
-                style: kDashboardTimeHeadingText,
-              ),
-              Text(
-                '${record.createdAt}',
-                style: kDashboardTimeBodyText,
-              ),
-              const Text(
-                'Last Refreshed:',
-                style: kDashboardTimeHeadingText,
-              ),
-              Text(
-                '$time',
-                style: kDashboardTimeBodyText,
-              )
-            ],
-          ),
-        ),
-      ],
-    );
   }
 
   @override
@@ -109,9 +85,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Metrics',
-                        style: kDashboardHeadingTextStyle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          const Text(
+                            'Metrics',
+                            style: kDashboardHeadingTextStyle,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              '(refreshed at ${currentDayFormatter.format(time)})',
+                              style: kMetricsHeadingTextStyle,
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -119,41 +109,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                record = fetchData();
+                                record = fetchMetricCardData();
                                 time = DateTime.now();
                               });
                             },
+                            splashRadius: 20,
                             icon: const Icon(
                               Icons.refresh,
-                              size: 30.0,
+                              size: 25.0,
                             ),
-                          ),
-                          const Icon(
-                            Icons.account_circle_outlined,
-                            size: 30.0,
                           ),
                         ],
                       )
                     ],
                   ),
-                  FutureBuilder(
-                    future: record,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: kThemePrimaryColor,
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        return createDashboardView(context, snapshot);
-                      } else {
-                        return const Text(
-                            'No data could be fetched! Check the Solaris web server for more info.');
-                      }
-                    },
+                  MetricCardBuilder(
+                    futureRecord: record,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  MetricLineChartBuilder(
+                    futureLineChart: futureLineChart,
                   ),
                 ],
               ),
