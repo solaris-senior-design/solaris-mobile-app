@@ -7,3 +7,7 @@ Future<String> getLocalMetricCardJson() {
 Future<String> getLocalLineChartJson() {
   return rootBundle.loadString('assets/line_chart_data.json');
 }
+
+Future<String> getLocalBarChartJson() {
+  return rootBundle.loadString('assets/bar_chart_data.json');
+}

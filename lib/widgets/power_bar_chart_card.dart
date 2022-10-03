@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 
 class PowerBarChartCard extends StatefulWidget {
+  final List<String> xLabels;
+  final List<double> metricPoints;
+
   const PowerBarChartCard({
     Key? key,
+    required this.xLabels,
+    required this.metricPoints,
   }) : super(key: key);
 
   @override
@@ -99,31 +104,7 @@ class _PowerBarChartCard extends State<PowerBarChartCard> {
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
-                              String day = '';
-                              switch (value.toInt()) {
-                                case 0:
-                                  day = 'Sun';
-                                  break;
-                                case 1:
-                                  day = 'Mon';
-                                  break;
-                                case 2:
-                                  day = 'Tue';
-                                  break;
-                                case 3:
-                                  day = 'Wed';
-                                  break;
-                                case 4:
-                                  day = 'Thu';
-                                  break;
-                                case 5:
-                                  day = 'Fri';
-                                  break;
-                                case 6:
-                                  day = 'Sat';
-                                  break;
-                              }
-                              return Text(day,
+                              return Text(widget.xLabels[value.toInt()],
                                   style: kMetricLineChartBorderText);
                             },
                           ),
@@ -132,13 +113,14 @@ class _PowerBarChartCard extends State<PowerBarChartCard> {
                       borderData: FlBorderData(
                           border: Border.all(color: kThemeBorderLineColor)),
                       barGroups: [
-                        for (int i = 0; i < _barVals.length; i++)
+                        for (int i = 0; i < widget.metricPoints.length; i++)
                           BarChartGroupData(
                             x: i,
                             barRods: [
                               BarChartRodData(
                                 fromY: 0,
-                                toY: _barVals[i],
+                                toY: double.parse(widget.metricPoints[i]
+                                    .toStringAsPrecision(4)),
                                 color: kThemePrimaryColor,
                                 width: 20,
                                 borderRadius: const BorderRadius.only(

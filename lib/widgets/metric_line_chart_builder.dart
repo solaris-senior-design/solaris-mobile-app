@@ -25,7 +25,6 @@ class _MetricLineChartBuilderState extends State<MetricLineChartBuilder> {
         Wrap(
           alignment: WrapAlignment.start,
           children: [
-            PowerBarChartCard(),
             MetricLineChartCard(
                 title: 'Voltage',
                 color: kThemeRedLineColor,
