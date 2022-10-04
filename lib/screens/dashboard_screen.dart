@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/globals/globals.dart';
+import 'package:solaris_mobile_app/models/metric_bar_chart.dart';
 import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
+import 'package:solaris_mobile_app/widgets/power_bar_chart_builder.dart';
 import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
@@ -21,6 +23,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late Future<MetricLineChart> futureLineChart;
   late Future<Record> record;
+  late Future<MetricBarChart> futureBarChart;
   late DateTime time;
 
   @override
@@ -28,11 +31,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     record = fetchMetricCardData();
     futureLineChart = fetchLineChartData();
+    futureBarChart = fetchBarChartData();
     Timer.periodic(const Duration(minutes: 1), (timer) {
       setState(() {
         futureLineChart = fetchLineChartData();
       });
     });
+  }
+
+  Future<MetricBarChart> fetchBarChartData() async {
+    Map<String, dynamic> barChartData =
+        json.decode(await getLocalBarChartJson());
+    // Map<String, dynamic> barChartData = await NetworkHelper.getData(
+    //   httpClient,
+    //   Uri(
+    //       scheme: 'https',
+    //       host: 'solaris-web-server.herokuapp.com',
+    //       path: 'records/weekly_records/1'),
+    // ); // 'https://solaris-web-server.herokuapp.com'
+    return MetricBarChart.fromJson(barChartData);
   }
 
   Future<MetricLineChart> fetchLineChartData() async {
@@ -125,6 +142,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   MetricCardBuilder(
                     futureRecord: record,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  PowerBarChartBuilder(
+                    futureBarChart: futureBarChart,
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
