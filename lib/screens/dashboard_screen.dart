@@ -47,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //   Uri(
     //       scheme: 'https',
     //       host: 'solaris-web-server.herokuapp.com',
-    //       path: 'records/list_of_recent_records/1'),
+    //       path: 'records/weekly_records/1'),
     // ); // 'https://solaris-web-server.herokuapp.com'
     return MetricBarChart.fromJson(barChartData);
   }

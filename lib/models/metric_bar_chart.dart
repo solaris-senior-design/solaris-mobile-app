@@ -2,19 +2,20 @@ import 'package:solaris_mobile_app/models/record.dart';
 import 'package:solaris_mobile_app/utils/date_formatter.dart';
 
 class MetricBarChart {
-  final Map<DateTime, List<Record>> _dataPoints;
+  final Map<String, List<Record>> _dataPoints;
   MetricBarChart(this._dataPoints);
 
   factory MetricBarChart.fromJson(Map<String, dynamic> json) {
     List<Record> points =
         (json["records"] as List).map((e) => Record.fromJson(e)).toList();
 
-    Map<DateTime, List<Record>> groupedByDate = {};
+    Map<String, List<Record>> groupedByDate = {};
     for (Record r in points) {
-      if (groupedByDate.containsKey(r.createdAt)) {
-        groupedByDate[r.createdAt]!.add(r);
+      String date = monthDayFormatter.format(r.createdAt);
+      if (groupedByDate.containsKey(date)) {
+        groupedByDate[date]!.add(r);
       } else {
-        groupedByDate[r.createdAt] = [r];
+        groupedByDate[date] = [r];
       }
     }
 
@@ -22,7 +23,7 @@ class MetricBarChart {
   }
 
   List<String> getMetricTimeStamps() {
-    return _dataPoints.keys.map((e) => monthDayFormatter.format(e)).toList();
+    return _dataPoints.keys.toList();
   }
 
   List<double> getPowerSpots() {
