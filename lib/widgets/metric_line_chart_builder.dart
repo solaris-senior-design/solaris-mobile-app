@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/widgets/power_bar_chart_card.dart';
 
 import '../models/metric_line_chart.dart';
 import '../utils/constants.dart';
