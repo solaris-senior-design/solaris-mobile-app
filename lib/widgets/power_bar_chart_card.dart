@@ -46,7 +46,7 @@ class _PowerBarChartCard extends State<PowerBarChartCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    "Power Generated",
+                    "Average Power (Watts)",
                     style: kMetricLineChartHeadingText,
                   ),
                   Row(

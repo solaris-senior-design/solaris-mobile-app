@@ -9,6 +9,6 @@ class BatteryCapacity extends Metric {
         value: (json.containsKey("batteryCapacity"))
             ? json['batteryCapacity'].toDouble()
             : 0.0,
-        units: "Percentage");
+        units: "Percent");
   }
 }
