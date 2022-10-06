@@ -10,4 +10,19 @@ class NetworkHelper {
       return jsonDecode(data);
     }
   }
+
+  static Future<bool> sendData(
+      http.Client client, Uri url, Map<String, String> msg) async {
+    http.Response response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(msg));
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
