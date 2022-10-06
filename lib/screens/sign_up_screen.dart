@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/screens/log_in_screen.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 import 'package:solaris_mobile_app/widgets/input_text_field.dart';
-import 'package:solaris_mobile_app/widgets/log_sign_in_button.dart';
+import 'package:solaris_mobile_app/widgets/sign_up_button.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -96,8 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.width * 0.03,
                               ),
-                              child: const LogInSignInButton(
-                                  buttonText: "SIGN IN"),
+                              child: const SignUpButton(),
                             ),
                           ],
                         ),

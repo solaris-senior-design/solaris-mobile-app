@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 
-class LogInSignInButton extends StatefulWidget {
-  final String buttonText;
-  const LogInSignInButton({Key? key, required this.buttonText})
-      : super(key: key);
+class LogInButton extends StatefulWidget {
+  const LogInButton({Key? key}) : super(key: key);
 
   @override
-  State<LogInSignInButton> createState() => _LogInSignInButtonState();
+  State<LogInButton> createState() => _LogInButtonState();
 }
 
-class _LogInSignInButtonState extends State<LogInSignInButton> {
+class _LogInButtonState extends State<LogInButton> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -23,8 +21,8 @@ class _LogInSignInButtonState extends State<LogInSignInButton> {
           backgroundColor: kThemePrimaryColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0))),
-      child: Text(
-        widget.buttonText,
+      child: const Text(
+        "LOG IN",
         style: kGetStartedButtonText,
       ),
     );
