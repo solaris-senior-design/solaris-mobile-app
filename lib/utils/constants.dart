@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const kThemeOffWhiteColor = Color(0xFFFEFAF6);
 const kThemePrimaryColor = Color(0xFF383050);
 const kThemeSecondaryColor = Color(0xFFEE8C82);
+const kThemeTertiaryColor = Color(0xFFDE676C);
 
 // LINE GRAPH COLORS
 const kThemePinkLineColor = Color(0xFFFB9A99);
@@ -99,4 +100,33 @@ const kMetricLineChartHeadingText = TextStyle(
   fontFamily: "Poppins",
   color: kThemePrimaryColor,
   fontWeight: FontWeight.w400,
+);
+
+const kLogInScreenHeadingText = TextStyle(
+  fontSize: 26,
+  fontFamily: "Poppins",
+  color: kThemeTertiaryColor,
+  fontWeight: FontWeight.w600,
+);
+
+const kLogInScreenSubheadingText = TextStyle(
+  fontSize: 14,
+  fontFamily: "Poppins",
+  color: Colors.black,
+  fontWeight: FontWeight.w400,
+);
+
+const kLogInScreenForgotPasswordText = TextStyle(
+  fontSize: 16,
+  fontFamily: "Poppins",
+  color: kThemeTertiaryColor,
+  fontWeight: FontWeight.w500,
+);
+
+const kLogInScreenCreateAccountText = TextStyle(
+  fontSize: 16,
+  fontFamily: "Poppins",
+  color: kThemeTertiaryColor,
+  fontWeight: FontWeight.w500,
+  decoration: TextDecoration.underline,
 );
