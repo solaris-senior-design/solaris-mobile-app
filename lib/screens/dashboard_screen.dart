@@ -1,17 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/globals/globals.dart';
-import 'package:solaris_mobile_app/models/metric_bar_chart.dart';
-import 'package:solaris_mobile_app/widgets/metric_card_builder.dart';
-import 'package:solaris_mobile_app/widgets/power_bar_chart_builder.dart';
-import '../models/metric_line_chart.dart';
-import '../models/network_helper.dart';
-import '../models/record.dart';
+import 'package:solaris_mobile_app/widgets/metric_card_section.dart';
+import 'package:solaris_mobile_app/widgets/metric_line_chart_section.dart';
+import 'package:solaris_mobile_app/widgets/power_bar_chart_section.dart';
 import '../utils/constants.dart';
-import '../utils/date_formatter.dart';
-import '../utils/get_local_json.dart';
-import '../widgets/metric_line_chart_builder.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -21,67 +12,55 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  late Future<MetricLineChart> futureLineChart;
-  late Future<Record> record;
-  late Future<MetricBarChart> futureBarChart;
-  late DateTime time;
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    record = fetchMetricCardData();
-    futureLineChart = fetchLineChartData();
-    futureBarChart = fetchBarChartData();
-    Timer.periodic(const Duration(minutes: 1), (timer) {
-      setState(() {
-        futureLineChart = fetchLineChartData();
-      });
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
-  }
-
-  Future<MetricBarChart> fetchBarChartData() async {
-    Map<String, dynamic> barChartData =
-        json.decode(await getLocalBarChartJson());
-    // Map<String, dynamic> barChartData = await NetworkHelper.getData(
-    //   httpClient,
-    //   Uri(
-    //       scheme: 'https',
-    //       host: 'solaris-web-server.herokuapp.com',
-    //       path: 'records/weekly_records/1'),
-    // ); // 'https://solaris-web-server.herokuapp.com'
-    return MetricBarChart.fromJson(barChartData);
-  }
-
-  Future<MetricLineChart> fetchLineChartData() async {
-    // Map<String, dynamic> lineChartData =
-    // json.decode(await getLocalLineChartJson());
-    Map<String, dynamic> lineChartData = await NetworkHelper.getData(
-      httpClient,
-      Uri(
-          scheme: 'https',
-          host: 'solaris-web-server.herokuapp.com',
-          path: 'records/list_of_recent_records/1'),
-    ); // 'https://solaris-web-server.herokuapp.com'
-    return MetricLineChart.fromJson(lineChartData);
-  }
-
-  Future<Record> fetchMetricCardData() async {
-    time = DateTime.now();
-    Map<String, dynamic> data = await NetworkHelper.getData(
-      httpClient,
-      Uri(
-          scheme: 'https',
-          host: 'solaris-web-server.herokuapp.com',
-          path: 'records/most_recent/1'),
-    ); // 'https://solaris-web-server.herokuapp.com'
-    // Map<String, dynamic> data = json.decode(await getLocalMetricCardJson());
-    return Record.fromJson(data);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kThemeOffWhiteColor,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: kThemePrimaryColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ios_share),
+            label: 'Export',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: kThemePinkLineColor,
+        unselectedItemColor: kThemeOffWhiteColor,
+        onTap: _onItemTapped,
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) => ListView(
           children: [
@@ -92,69 +71,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Center(
+                children: const [
+                  Center(
                     child: Text(
                       'solaris',
                       style: kDashboardLogoTextStyle,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          const Text(
-                            'Metrics',
-                            style: kDashboardHeadingTextStyle,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              '(refreshed at ${currentDayFormatter.format(time)})',
-                              style: kMetricsHeadingTextStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                record = fetchMetricCardData();
-                                time = DateTime.now();
-                              });
-                            },
-                            splashRadius: 20,
-                            icon: const Icon(
-                              Icons.refresh,
-                              size: 25.0,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  MetricCardBuilder(
-                    futureRecord: record,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  PowerBarChartBuilder(
-                    futureBarChart: futureBarChart,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  MetricLineChartBuilder(
-                    futureLineChart: futureLineChart,
-                  ),
+                  PowerBarChartSection(),
+                  MetricCardSection(),
+                  MetricLineChartSection(),
                 ],
               ),
             )

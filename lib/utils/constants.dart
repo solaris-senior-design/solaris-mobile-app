@@ -79,7 +79,7 @@ const kMetricsValueTextStyle = TextStyle(
   fontSize: 36,
   fontFamily: "Poppins",
   color: kThemePrimaryColor,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
 );
 
 const kDashboardTimeBodyText = TextStyle(
