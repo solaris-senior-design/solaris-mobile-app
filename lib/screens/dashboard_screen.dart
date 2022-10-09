@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/widgets/metric_card_section.dart';
 import 'package:solaris_mobile_app/widgets/metric_line_chart_section.dart';
 import 'package:solaris_mobile_app/widgets/power_bar_chart_section.dart';
+import 'package:solaris_mobile_app/widgets/profile_info.dart';
 import '../utils/constants.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -13,21 +14,20 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
+  late List<Widget> widgetOptions = <Widget>[
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        PowerBarChartSection(),
+        MetricCardSection(),
+        MetricLineChartSection(),
+      ],
     ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
+    const Text(
+      'Export Screen',
+      style: kDashboardLogoTextStyle,
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    ProfileInfo()
   ];
 
   void _onItemTapped(int index) {
@@ -69,20 +69,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 horizontal: MediaQuery.of(context).size.width * 0.05,
                 vertical: MediaQuery.of(context).size.height * 0.02,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Center(
-                    child: Text(
-                      'solaris',
-                      style: kDashboardLogoTextStyle,
-                    ),
+              child: Column(children: [
+                const Center(
+                  child: Text(
+                    'solaris',
+                    style: kDashboardLogoTextStyle,
                   ),
-                  PowerBarChartSection(),
-                  MetricCardSection(),
-                  MetricLineChartSection(),
-                ],
-              ),
+                ),
+                widgetOptions.elementAt(_selectedIndex)
+              ]),
             )
           ],
         ),

@@ -5,6 +5,7 @@ const kThemeOffWhiteColor = Color(0xFFFEFAF6);
 const kThemePrimaryColor = Color(0xFF383050);
 const kThemeSecondaryColor = Color(0xFFEE8C82);
 const kThemeTertiaryColor = Color(0xFFDE676C);
+const kThemeDarkGrayColor = Color(0xFF404040);
 
 // LINE GRAPH COLORS
 const kThemePinkLineColor = Color(0xFFFB9A99);
@@ -129,4 +130,23 @@ const kLogInScreenCreateAccountText = TextStyle(
   color: kThemeTertiaryColor,
   fontWeight: FontWeight.w500,
   decoration: TextDecoration.underline,
+);
+
+const kUserProfileInfoText = TextStyle(
+  fontSize: 14,
+  fontFamily: "Poppins",
+  color: kThemeDarkGrayColor,
+);
+
+const kUserProfileButtonText = TextStyle(
+  fontSize: 14,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w500,
+  color: kThemeTertiaryColor,
+);
+
+const kChangePasswordText = TextStyle(
+  fontSize: 14,
+  fontFamily: "Poppins",
+  color: kThemeDarkGrayColor,
 );
