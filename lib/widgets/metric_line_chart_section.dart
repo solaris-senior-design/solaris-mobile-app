@@ -15,16 +15,23 @@ class MetricLineChartSection extends StatefulWidget {
 
 class _MetricLineChartSectionState extends State<MetricLineChartSection> {
   late Future<MetricLineChart> futureLineChart;
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     futureLineChart = fetchLineChartData();
-    Timer.periodic(const Duration(minutes: 1), (timer) {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       setState(() {
         futureLineChart = fetchLineChartData();
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   Future<MetricLineChart> fetchLineChartData() async {
