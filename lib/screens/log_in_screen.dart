@@ -96,7 +96,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.width * 0.03,
                               ),
-                              child: const LogInButton(),
+                              child: const LogInButton(
+                                  apiCall: <String, String>{
+                                    "email": "john.doe@test.com",
+                                    "password": "johndoe1"
+                                  }),
                             ),
                           ],
                         ),
