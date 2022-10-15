@@ -11,7 +11,7 @@ class NetworkHelper {
     }
   }
 
-  static Future<bool> sendData(
+  static Future<http.Response> sendData(
       http.Client client, Uri url, Map<String, String> msg) async {
     http.Response response = await http.post(url,
         headers: <String, String>{
@@ -19,10 +19,6 @@ class NetworkHelper {
         },
         body: jsonEncode(msg));
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+    return response;
   }
 }

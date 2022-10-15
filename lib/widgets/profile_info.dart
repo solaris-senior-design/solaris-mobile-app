@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/widgets/change_password_button.dart';
 import 'package:solaris_mobile_app/widgets/log_out_button.dart';
-
+import '../models/user.dart';
 import '../utils/constants.dart';
 
 class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({Key? key}) : super(key: key);
+  final User user;
+  const ProfileInfo({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ProfileInfo> createState() => _ProfileInfoState();
@@ -15,35 +16,35 @@ class _ProfileInfoState extends State<ProfileInfo> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        SizedBox(
+      children: [
+        const SizedBox(
           height: 20,
         ),
-        Icon(
+        const Icon(
           Icons.account_circle,
           size: 80,
           color: kThemePrimaryColor,
         ),
         Text(
-          'Jaime Garcia, Jr.',
+          widget.user.fullName,
           style: kDashboardHeadingTextStyle,
         ),
         Text(
-          'jaimegarjr',
+          widget.user.username,
           style: kUserProfileInfoText,
         ),
         Text(
-          'jjgarcia2725@gmail.com',
+          widget.user.email,
           style: kUserProfileInfoText,
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        ChangePasswordButton(),
-        SizedBox(
+        const ChangePasswordButton(),
+        const SizedBox(
           height: 20,
         ),
-        LogOutButton(),
+        LogOutButton(user: widget.user),
       ],
     );
   }

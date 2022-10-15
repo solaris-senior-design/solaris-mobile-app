@@ -15,6 +15,19 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,11 +109,10 @@ class _LogInScreenState extends State<LogInScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.width * 0.03,
                               ),
-                              child: const LogInButton(
-                                  apiCall: <String, String>{
-                                    "email": "john.doe@test.com",
-                                    "password": "johndoe1"
-                                  }),
+                              child: LogInButton(
+                                emailController: emailController,
+                                passwordController: passwordController,
+                              ),
                             ),
                           ],
                         ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:solaris_mobile_app/screens/dashboard_screen.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 
+import '../models/user.dart';
+
 class LogOutButton extends StatefulWidget {
-  const LogOutButton({Key? key}) : super(key: key);
+  final User user;
+  const LogOutButton({Key? key, required this.user}) : super(key: key);
 
   @override
   State<LogOutButton> createState() => _LogOutButtonState();
@@ -14,8 +17,10 @@ class _LogOutButtonState extends State<LogOutButton> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: (() async {
-        Navigator.pop(context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()));
+        Navigator.pop(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DashboardScreen(user: widget.user)));
       }),
       style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),

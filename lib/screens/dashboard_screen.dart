@@ -3,10 +3,12 @@ import 'package:solaris_mobile_app/widgets/metric_card_section.dart';
 import 'package:solaris_mobile_app/widgets/metric_line_chart_section.dart';
 import 'package:solaris_mobile_app/widgets/power_bar_chart_section.dart';
 import 'package:solaris_mobile_app/widgets/profile_info.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  final User user;
+  const DashboardScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -27,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       'Export Screen',
       style: kDashboardLogoTextStyle,
     ),
-    ProfileInfo()
+    ProfileInfo(user: widget.user)
   ];
 
   void _onItemTapped(int index) {
