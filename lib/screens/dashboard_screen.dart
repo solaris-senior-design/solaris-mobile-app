@@ -20,9 +20,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PowerBarChartSection(),
-        MetricCardSection(),
-        MetricLineChartSection(),
+        PowerBarChartSection(user: widget.user),
+        MetricCardSection(user: widget.user),
+        MetricLineChartSection(user: widget.user),
       ],
     ),
     const Text(

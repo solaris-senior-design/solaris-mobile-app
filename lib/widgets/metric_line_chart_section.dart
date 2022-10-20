@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import '../globals/globals.dart';
 import '../models/metric_line_chart.dart';
 import '../models/network_helper.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 import 'metric_line_chart_builder.dart';
 
 class MetricLineChartSection extends StatefulWidget {
-  const MetricLineChartSection({Key? key}) : super(key: key);
+  final User user;
+  const MetricLineChartSection({Key? key, required this.user})
+      : super(key: key);
 
   @override
   State<MetricLineChartSection> createState() => _MetricLineChartSectionState();

@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:solaris_mobile_app/widgets/power_bar_chart_builder.dart';
 import '../models/metric_bar_chart.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 import '../utils/get_local_json.dart';
 
 class PowerBarChartSection extends StatefulWidget {
-  const PowerBarChartSection({Key? key}) : super(key: key);
+  final User user;
+  const PowerBarChartSection({Key? key, required this.user}) : super(key: key);
 
   @override
   State<PowerBarChartSection> createState() => _PowerBarChartSectionState();

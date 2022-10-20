@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import '../globals/globals.dart';
 import '../models/network_helper.dart';
 import '../models/record.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
 import 'metric_card_builder.dart';
 
 class MetricCardSection extends StatefulWidget {
-  const MetricCardSection({Key? key}) : super(key: key);
+  final User user;
+  const MetricCardSection({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MetricCardSection> createState() => _MetricCardSectionState();
