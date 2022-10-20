@@ -96,7 +96,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.width * 0.03,
                               ),
-                              child: const SignUpButton(),
+                              child: SignUpButton(
+                                fullNameController: fullNameController,
+                                usernameController: usernameController,
+                                emailController: emailController,
+                                passwordController: passwordController,
+                              ),
                             ),
                           ],
                         ),
