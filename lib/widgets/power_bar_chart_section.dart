@@ -54,7 +54,7 @@ class _PowerBarChartSectionState extends State<PowerBarChartSection> {
                   style: kDashboardHeadingTextStyle,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: EdgeInsets.only(left: 8.0),
                   child: Text(
                     '(last 7 days)',
                     style: kMetricsHeadingTextStyle,

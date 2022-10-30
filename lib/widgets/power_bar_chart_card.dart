@@ -17,8 +17,6 @@ class PowerBarChartCard extends StatefulWidget {
 }
 
 class _PowerBarChartCard extends State<PowerBarChartCard> {
-  final List<double> _barVals = [100, 125, 75, 50, 150, 100, 25];
-
   @override
   Widget build(BuildContext context) {
     return Container(
