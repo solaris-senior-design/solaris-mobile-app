@@ -40,7 +40,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
         const SizedBox(
           height: 20,
         ),
-        const ChangePasswordButton(),
+        ChangePasswordButton(user: widget.user),
         const SizedBox(
           height: 20,
         ),
