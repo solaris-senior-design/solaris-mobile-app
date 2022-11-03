@@ -34,6 +34,35 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.chevron_left,
+            size: 36,
+          ),
+          splashRadius: 20,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
+        title: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.03,
+            vertical: MediaQuery.of(context).size.height * 0.01,
+          ),
+          child: Column(
+            children: const [
+              Text(
+                'solaris',
+                style: kDashboardLogoTextStyle,
+              ),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: kThemeOffWhiteColor,
       body: LayoutBuilder(
         builder: (context, constraints) => ListView(
@@ -44,20 +73,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.03,
-                      vertical: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    child: Column(
-                      children: const [
-                        Text(
-                          'solaris',
-                          style: kDashboardLogoTextStyle,
-                        ),
-                      ],
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * 0.15,
@@ -107,6 +122,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 oldPassword: oldPassword,
                                 newPassword: newPassword,
                                 newPasswordConfirm: newPasswordConfirm,
+                                user: widget.user,
                               ),
                             ),
                           ],

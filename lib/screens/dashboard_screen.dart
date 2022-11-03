@@ -25,10 +25,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         MetricLineChartSection(user: widget.user),
       ],
     ),
-    const Text(
-      'Export Screen',
-      style: kDashboardLogoTextStyle,
-    ),
     ProfileInfo(user: widget.user)
   ];
 
@@ -48,10 +44,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.ios_share),
-            label: 'Export',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

@@ -20,6 +20,19 @@ class NetworkHelper {
     http.Response response = await http.post(url,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
+          'x-access-token': token,
+        },
+        body: jsonEncode(msg));
+
+    return response;
+  }
+
+  static Future<http.Response> putData(
+      http.Client client, Uri url, Map<String, String> msg) async {
+    http.Response response = await http.put(url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'x-access-token': token,
         },
         body: jsonEncode(msg));
 
