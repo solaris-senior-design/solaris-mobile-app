@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solaris_mobile_app/screens/dashboard_screen.dart';
+import 'package:solaris_mobile_app/screens/log_in_screen.dart';
 import 'package:solaris_mobile_app/utils/constants.dart';
 
 class GetStartedButton extends StatefulWidget {
@@ -15,7 +15,7 @@ class _GetStartedButtonState extends State<GetStartedButton> {
     return TextButton(
       onPressed: (() async {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()));
+            MaterialPageRoute(builder: (context) => const LogInScreen()));
       }),
       style: TextButton.styleFrom(
           elevation: 5.0,
