@@ -49,4 +49,12 @@ class MetricLineChart {
     }
     return spots;
   }
+
+  List<FlSpot> getIrradianceSpots() {
+    List<FlSpot> spots = [];
+    for (int i = 0; i < _dataPoints.length; i++) {
+      spots.add(FlSpot(i.toDouble(), _dataPoints[i].irradiance));
+    }
+    return spots;
+  }
 }

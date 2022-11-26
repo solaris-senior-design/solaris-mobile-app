@@ -42,6 +42,7 @@ class _LogInButtonState extends State<LogInButton> {
         if (response.statusCode == 200) {
           String data = response.body;
           Map<String, dynamic> decodedData = jsonDecode(data);
+          print(decodedData);
           token = decodedData["accessToken"];
           User user = User.fromJson(decodedData["user"]);
           Navigator.push(
