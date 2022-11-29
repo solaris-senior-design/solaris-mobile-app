@@ -18,13 +18,23 @@ class MetricCardBuilder extends StatefulWidget {
 
 class _MetricCardBuilderState extends State<MetricCardBuilder> {
   List<MetricCard> getMetricCards(List<Metric> metrics) {
-    return List.generate(
-        metrics.length,
-        (i) => MetricCard(
-              parameter: metrics[i].parameter,
-              value: metrics[i].value,
-              units: metrics[i].units,
-            ));
+    return List.generate(metrics.length, (i) {
+      if (metrics[i].parameter == "Illuminance") {
+        return MetricCard(
+          parameter: metrics[i].parameter,
+          value: metrics[i].value,
+          units: metrics[i].units,
+          needIcon: true,
+        );
+      } else {
+        return MetricCard(
+          parameter: metrics[i].parameter,
+          value: metrics[i].value,
+          units: metrics[i].units,
+          needIcon: false,
+        );
+      }
+    });
   }
 
   Widget createMetricCardView(context, snapshot) {

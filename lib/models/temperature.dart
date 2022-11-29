@@ -9,6 +9,6 @@ class Temperature extends Metric {
         value: (json.containsKey("temperature"))
             ? json['temperature'].toDouble()
             : 0.0,
-        units: "Celsius");
+        units: "Fahrenheit");
   }
 }

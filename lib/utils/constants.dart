@@ -12,6 +12,7 @@ const kThemePinkLineColor = Color(0xFFFB9A99);
 const kThemeYellowLineColor = Color(0xFFFDBF6F);
 const kThemeGreenLineColor = Color(0xFFB2DF8A);
 const kThemeRedLineColor = Color(0xFFE31A1C);
+const kThemePurpleLineColor = Color(0xFF383050);
 
 const kThemeBorderLineColor = Color(0xFFD9D9D9);
 
@@ -78,6 +79,13 @@ const kMetricsHeadingTextStyle = TextStyle(
 
 const kMetricsValueTextStyle = TextStyle(
   fontSize: 36,
+  fontFamily: "Poppins",
+  color: kThemePrimaryColor,
+  fontWeight: FontWeight.w500,
+);
+
+const kMetricsValueSecondaryTextStyle = TextStyle(
+  fontSize: 24,
   fontFamily: "Poppins",
   color: kThemePrimaryColor,
   fontWeight: FontWeight.w500,

@@ -44,6 +44,11 @@ class _MetricLineChartBuilderState extends State<MetricLineChartBuilder> {
                 color: kThemePinkLineColor,
                 xLabels: lineChart.getMetricTimeStamps(),
                 metricPoints: lineChart.getTemperatureSpots()),
+            MetricLineChartCard(
+                title: 'Brightness (Lux)',
+                color: kThemePurpleLineColor,
+                xLabels: lineChart.getMetricTimeStamps(),
+                metricPoints: lineChart.getIrradianceSpots()),
           ],
         ),
       ],

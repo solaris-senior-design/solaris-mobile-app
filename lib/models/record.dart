@@ -29,7 +29,7 @@ class Record {
   }
 
   List<Metric> getDataMetrics() {
-    return [_voltage, _current, _temperature, _batteryCapacity];
+    return [_voltage, _current, _temperature, _batteryCapacity, _irradiance];
   }
 
   DateTime get createdAt {
