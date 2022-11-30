@@ -6,6 +6,7 @@ class MetricCard extends StatefulWidget {
   final String parameter;
   final double value;
   final String units;
+  final String ranges;
   final bool needIcon;
 
   const MetricCard(
@@ -13,6 +14,7 @@ class MetricCard extends StatefulWidget {
       required this.parameter,
       required this.value,
       required this.units,
+      required this.ranges,
       required this.needIcon})
       : super(key: key);
 
@@ -51,52 +53,81 @@ class _MetricCardState extends State<MetricCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 170,
-      height: 150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4.0,
-          )
-        ],
-      ),
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
+    return InkWell(
+      borderRadius: BorderRadius.circular(25),
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(widget.parameter),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        "The value of ${widget.parameter.toLowerCase()} is ${widget.value} ${widget.units.toLowerCase()}"),
+                    const SizedBox(height: 10),
+                    Text("Ranges: ${widget.ranges}"),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("OK"))
+                ],
+              );
+            });
+      },
+      child: Container(
+        width: 170,
+        height: 150,
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              widget.parameter,
-              style: kMetricsHeadingTextStyle,
-            ),
-            Padding(
-              padding: widget.needIcon
-                  ? const EdgeInsets.all(7.5)
-                  : const EdgeInsets.all(15.0),
-              child: Text(
-                widget.value.toStringAsFixed(2),
-                style: widget.needIcon
-                    ? kMetricsValueSecondaryTextStyle
-                    : kMetricsValueTextStyle,
-              ),
-            ),
-            widget.needIcon
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 7.5),
-                    child: getWeatherIcon(widget.value),
-                  )
-                : const SizedBox(),
-            Text(
-              widget.units,
-              style: kMetricsHeadingTextStyle,
-            ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4.0,
+            )
           ],
+        ),
+        child: Card(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.parameter,
+                style: kMetricsHeadingTextStyle,
+              ),
+              Padding(
+                padding: widget.needIcon
+                    ? const EdgeInsets.all(7.5)
+                    : const EdgeInsets.all(15.0),
+                child: Text(
+                  widget.value.toStringAsFixed(2),
+                  style: widget.needIcon
+                      ? kMetricsValueSecondaryTextStyle
+                      : kMetricsValueTextStyle,
+                ),
+              ),
+              widget.needIcon
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 7.5),
+                      child: getWeatherIcon(widget.value),
+                    )
+                  : const SizedBox(),
+              Text(
+                widget.units,
+                style: kMetricsHeadingTextStyle,
+              ),
+            ],
+          ),
         ),
       ),
     );

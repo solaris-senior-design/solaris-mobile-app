@@ -18,12 +18,22 @@ class MetricCardBuilder extends StatefulWidget {
 
 class _MetricCardBuilderState extends State<MetricCardBuilder> {
   List<MetricCard> getMetricCards(List<Metric> metrics) {
+    List<String> ranges = [
+      "0V-17.8V, rated: 17.8V, max: 21V",
+      "0A-1.43A, rated: 1.43A, max: 1.5A",
+      "50°F-130°F",
+      "0%-100%",
+      "0lux-50000lux, max in sunlight: 100k",
+      "0A-7A",
+    ];
+
     return List.generate(metrics.length, (i) {
       if (metrics[i].parameter == "Illuminance") {
         return MetricCard(
           parameter: metrics[i].parameter,
           value: metrics[i].value,
           units: metrics[i].units,
+          ranges: ranges[i],
           needIcon: true,
         );
       } else {
@@ -31,6 +41,7 @@ class _MetricCardBuilderState extends State<MetricCardBuilder> {
           parameter: metrics[i].parameter,
           value: metrics[i].value,
           units: metrics[i].units,
+          ranges: ranges[i],
           needIcon: false,
         );
       }

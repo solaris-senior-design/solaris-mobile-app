@@ -1,3 +1,5 @@
+import 'package:solaris_mobile_app/models/battery_capacity_current.dart';
+
 import 'temperature.dart';
 import 'voltage.dart';
 import 'battery_capacity.dart';
@@ -12,9 +14,10 @@ class Record {
   final Temperature _temperature;
   final Irradiance _irradiance;
   final BatteryCapacity _batteryCapacity;
+  final BatteryCapacityCurrent _batteryCapacityCurrent;
 
   Record(this._createdAt, this._voltage, this._current, this._temperature,
-      this._irradiance, this._batteryCapacity);
+      this._irradiance, this._batteryCapacity, this._batteryCapacityCurrent);
 
   factory Record.fromJson(Map<String, dynamic> json) {
     DateTime time = DateTime.parse(json["createdAt"]).toLocal();
@@ -23,13 +26,22 @@ class Record {
     Temperature temperature = Temperature.fromJson(json);
     Irradiance irradiance = Irradiance.fromJson(json);
     BatteryCapacity batteryCapacity = BatteryCapacity.fromJson(json);
+    BatteryCapacityCurrent batteryCapacityCurrent =
+        BatteryCapacityCurrent.fromJson((batteryCapacity.value / 100) * 7);
 
-    return Record(
-        time, voltage, current, temperature, irradiance, batteryCapacity);
+    return Record(time, voltage, current, temperature, irradiance,
+        batteryCapacity, batteryCapacityCurrent);
   }
 
   List<Metric> getDataMetrics() {
-    return [_voltage, _current, _temperature, _batteryCapacity, _irradiance];
+    return [
+      _voltage,
+      _current,
+      _temperature,
+      _batteryCapacity,
+      _irradiance,
+      _batteryCapacityCurrent
+    ];
   }
 
   DateTime get createdAt {

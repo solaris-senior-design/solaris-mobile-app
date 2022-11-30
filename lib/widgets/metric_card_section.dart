@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../globals/globals.dart';
 import '../models/network_helper.dart';
@@ -18,6 +20,8 @@ class MetricCardSection extends StatefulWidget {
 class _MetricCardSectionState extends State<MetricCardSection> {
   late DateTime time;
   late Future<Record> record;
+  late Timer _timer;
+
   Future<Record> fetchMetricCardData() async {
     time = DateTime.now();
     Map<String, dynamic> data = await NetworkHelper.getData(
@@ -35,6 +39,17 @@ class _MetricCardSectionState extends State<MetricCardSection> {
   void initState() {
     super.initState();
     record = fetchMetricCardData();
+    _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      setState(() {
+        record = fetchMetricCardData();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
